@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -76,9 +77,9 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'event_rsvp_db',  #database name
+        'NAME': config('DB_NAME'),  #database name
         'CLIENT': {
-            'host': 'mongodb+srv://seang673:CrazySMG19@rsvpcluster.dvqo9pg.mongodb.net/event_rsvp_db?retryWrites=true&w=majority&appName=rsvpCluster'
+            'host': config('DB_URI')
         }
     }
 
