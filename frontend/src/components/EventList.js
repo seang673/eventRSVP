@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import api from '.../services/api';
+import RSVPForm from './RSVPForm';
 
 function EventList(){
     const [events, setEvents] = useState([]);
@@ -40,6 +41,7 @@ function EventList(){
                     {currentEvents.map(event => (
                         <li key={event.id}>
                             <strong>{event.title}</strong> - {event.date}
+                            <RSVPForm eventId={event.id} />
                         </li>
                     ))}
                 </ul>
