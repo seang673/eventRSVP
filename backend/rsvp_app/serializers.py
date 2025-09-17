@@ -1,0 +1,21 @@
+from rest_framework import serializers
+from .models import Event, RSVP
+
+#Validates incoming JSON before saving to database
+class EventSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Event
+        fields = '__all__'  #all fields are exposed
+
+class RSVPSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RSVP
+        fields = '__all__'  #all fields are exposed
+
+    def validate(self, data):
+        event = data.get('event')
+        # Only run this check if we're creating a new RSVP
+        if self.instance is None and event and event.rsvp_set.count() >= event.capacity:
+            raise serializers.ValidationError("This event is already at full capacity.")
+        return data
+

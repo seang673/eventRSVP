@@ -11,8 +11,6 @@ class Event(models.Model):
     class Meta:
         db_table = 'event'
 
-
-
 class RSVP(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
@@ -22,3 +20,4 @@ class RSVP(models.Model):
 
     class Meta:
         db_table='rsvp'
+        unique_together = ('email', 'event')
