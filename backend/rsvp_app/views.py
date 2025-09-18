@@ -1,10 +1,16 @@
 from django.shortcuts import render
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import viewsets, filters
+from rest_framework import viewsets, filters, generics
+from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAdminUser
-from .models import Event, RSVP
-from .serializers import EventSerializer, RSVPSerializer
+from .models import Event, RSVP, CustomUser
+from .serializers import EventSerializer, RSVPSerializer, RegisterSerializer
 # Create your views here.
+
+class RegisterView(generics.CreateAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = RegisterSerializer
+    authentication_classes = [SessionAuthentication]
 
 class EventViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all()

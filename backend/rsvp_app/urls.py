@@ -6,7 +6,7 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView
 )
 
-from .views import EventViewSet, RSVPViewSet
+from .views import EventViewSet, RSVPViewSet, RegisterView
 
 router = DefaultRouter()   #Atuo Generates routes
 router.register(r'events', EventViewSet)
@@ -14,10 +14,10 @@ router.register(r'rsvps', RSVPViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-]
+    path('register/', RegisterView.as_view(), name='register'),
 
-urlpatterns += [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
 ]
+

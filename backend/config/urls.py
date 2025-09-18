@@ -19,5 +19,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('rsvp_app.urls'))
+    path('', include('rsvp_app.urls')) #Ensures Django looks inside rsvp_app.urls
 ]
