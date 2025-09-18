@@ -8,9 +8,16 @@ class EventSerializer(serializers.ModelSerializer):
         fields = '__all__'  #all fields are exposed
 
 class RSVPSerializer(serializers.ModelSerializer):
+    #Lets frontend display event name directly without
+    #needing second API call
+    event_title = serializers.SerializerMethodField()
+
     class Meta:
         model = RSVP
         fields = '__all__'  #all fields are exposed
+
+    def get_event_title(self, obj):
+        return obj.event.title if obj.event else None
 
     def validate(self, data):
         event = data.get('event')
