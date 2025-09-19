@@ -12,7 +12,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<EventList />} />
+        <Route path="/" element={<Register />} />
         <Route path="/dashboard" element={<RSVPDashboard />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register/>} />
