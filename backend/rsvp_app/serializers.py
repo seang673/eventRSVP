@@ -19,9 +19,6 @@ class RegisterSerializer(serializers.ModelSerializer):
         return user
 
 
-
-
-
 #Validates incoming JSON before saving to database
 class EventSerializer(serializers.ModelSerializer):
     class Meta:

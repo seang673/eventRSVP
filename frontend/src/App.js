@@ -5,7 +5,9 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import EventList from './components/EventList';
 import RSVPDashboard from './components/RSVPDashboard';
 import Login from './components/LoginForm';
+import OrganizerRoute from './components/OrganizerRoute';
 import Register from './components/RegisterForm';
+import Unauthorized from './pages/Unauthorized';
 
 
 function App() {
@@ -16,6 +18,12 @@ function App() {
         <Route path="/dashboard" element={<RSVPDashboard />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register/>} />
+        <Route path="/create-event" element={
+          <OrganizerRoute>
+            <CreateEvent />
+          </OrganizerRoute>
+        } />
+        <Route path ="/unauthorized" element ={<Unauthorized/>} />
       </Routes>
     </Router>
   );
