@@ -15,7 +15,6 @@ function RSVPForm({ eventId }) {
                 email,
                 message,
                 event: eventId,
-                confirmed
         });
         alert('RSVP sumbitted successfully!');
         setName('');
@@ -30,12 +29,12 @@ function RSVPForm({ eventId }) {
     return (
         <form onSubmit={handleSubmit}>
             <h3>RSVP To This Event</h3>
-            <input type = "text" value={name} onChange={e => setName(e.target.value)} placeholder="Name" required/>
-            <input type = "email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" required/>
+            <input type = "text" value={name} onChange={e => setName(e.target.value)} placeholder="Enter Name" required/>
+            <input type = "email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter Email" required/>
             <textarea value={message} onChange={e => setMessage(e.target.value)} placeholder="Message (optional)"/>
             <button type="submit">Submit RSVP</button>
         </form>
     );
-}
+};
 
 export default RSVPForm;

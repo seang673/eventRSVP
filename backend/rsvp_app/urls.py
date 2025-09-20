@@ -8,7 +8,7 @@ from rest_framework_simplejwt.views import (
 
 from .views import EventViewSet, RSVPViewSet, RegisterView, DashboardView
 
-router = DefaultRouter()   #Atuo Generates routes
+router = DefaultRouter()   #Auto Generates routes for events and rsvps
 router.register(r'events', EventViewSet)
 router.register(r'rsvps', RSVPViewSet)
 
