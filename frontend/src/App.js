@@ -6,6 +6,7 @@ import EventList from './components/EventList';
 import RSVPDashboard from './components/RSVPDashboard';
 import Login from './components/LoginForm';
 import OrganizerRoute from './components/OrganizerRoute';
+import CreateEvent from './components/CreateEventForm';
 import Register from './components/RegisterForm';
 import Unauthorized from './pages/Unauthorized';
 
