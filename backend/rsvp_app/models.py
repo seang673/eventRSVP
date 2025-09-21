@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 
 class CustomUser(AbstractUser):
@@ -14,6 +15,11 @@ class Event(models.Model):
     location = models.CharField(max_length=200)
     capacity = models.IntegerField()
     description = models.TextField()
+    organizer = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='organized_events'
+    )
 
     class Meta:
         db_table = 'event'

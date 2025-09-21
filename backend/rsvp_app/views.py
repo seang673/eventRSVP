@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django_filters.rest_framework import DjangoFilterBackend
+from django.core.exceptions import PermissionDenied
 from rest_framework import viewsets, filters, generics
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAdminUser, IsAuthenticated, BasePermission
@@ -39,10 +40,16 @@ class DashboardView(generics.RetrieveAPIView):
         })
 
 class EventViewSet(viewsets.ModelViewSet):
-    queryset = Event.objects.all()
     serializer_class = EventSerializer
     filter_backends = [filters.SearchFilter, DjangoFilterBackend]
     search_fields = ['title', 'location', 'description']
+    filterset_fields = ['date', 'location']
+
+    def get_queryset(self):
+        return Event.objects.filter(organizer=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(organizer=self.request.user)
 
 class RSVPViewSet(viewsets.ModelViewSet):
     queryset = RSVP.objects.all()
