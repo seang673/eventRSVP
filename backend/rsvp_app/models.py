@@ -17,8 +17,8 @@ class Event(models.Model):
     description = models.TextField()
     organizer = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name='organized_events'
+        on_delete=models.CASCADE, related_name='organized_events',
+        null=True, blank=True
     )
 
     class Meta:

@@ -5,6 +5,12 @@ function RSVPDashboard() {
     const [rsvps, setRsvps] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    const userEmail = localStorage.get('email');
+    const token = localStorage.getItem('token');
+    const isOrganizer = localStorage.getItem('is_organizer') === 'true';
+;
+    if (!token) return <Navigate to="/unauthorized" />;
+
     const fetchRsvps = async () => {
         try{
             const res = await api.get('/rsvps');
@@ -15,11 +21,34 @@ function RSVPDashboard() {
             setLoading(false);
         }
     };
+
+    const handleCancel = async (rsvpId) => {
+        try{
+            const token = localStorage.getItem('token');
+            const res = await api.delete(`/rsvps/${rsvpId}`, {
+                headers: {
+                    Authorization : `Bearer ${token}`,
+                },
+            });
+
+            if (res.status === 204 || res.status === 200) {
+                setRsvps(prev => prev.filter(r => r.id !== rsvpId));
+            } else {
+                console.error("Failed to cancel RSVP");
+            }
+
+        } catch(err) {
+            console.error("Error canceling RSVP:", err);
+        }
+    };
+
     useEffect(() => {
         fetchRsvps();
     }, []);
 
     if (loading) return <p>Loading the RSVPs...</p>
+
+    const filteredRsvps = isOrganizer ? rsvps: rsvps.filter(rsvp => rsvp.email === userEmail);
 
     return (
         <div>
@@ -37,13 +66,16 @@ function RSVPDashboard() {
                 </thead>
                 <tbody>
                     //populates table with rsvps
-                    {rsvps.map(rsvp => (
+                    {filteredRsvps.map(rsvp => (
                         <tr key={rsvp.id}>
                             <td>{rsvp.event_title || rsvp.event}</td>
                             <td>{rsvp.name}</td>
                             <td>{rsvp.email}</td>
                             <td>{rsvp.message}</td>
-                            <td>{rsvp.confimred ? '✅' : '❌'}</td>
+                            <td>{rsvp.confirmed ? '✅' : '❌'}</td>
+                            <td>
+                                <button onClick={() => handleCancel(rsvp.id)}>Cancel</button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>

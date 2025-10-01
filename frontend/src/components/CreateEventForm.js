@@ -7,6 +7,7 @@ const CreateEventForm = () => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [date, setDate] = useState('');
+    const [capacity, setCapacity] = useState('');
     const [location, setLocation] = useState('');
     const [message, setMessage] = useState('');
     const [errors, setErrors] = useState({});
@@ -25,6 +26,9 @@ const CreateEventForm = () => {
             case 'date':
                 setDate(value);
                 break;
+            case 'capacity':
+                setCapacity(value);
+                break;
             case 'location':
                 setLocation(value);
                 break;
@@ -38,6 +42,9 @@ const CreateEventForm = () => {
             if (!title.trim()) newErrors.title = 'Title is required';
             if (!description.trim()) newErrors.description = 'Description is required';
             if (!location.trim()) newErrors.location = 'Location is required';
+            if (!capacity || isNaN(capacity) || parseInt(capacity) <= 0){
+                errors.capacity = "Capacity must be a positive number";
+            }
 
             // Check for valid date
             if (!date) {
@@ -59,7 +66,7 @@ const CreateEventForm = () => {
             return;
         }
         const token = localStorage.getItem('token');
-        const payload= {title, description, date, location};
+        const payload= {title, description, date, capacity, location};
 
         try{
             const res = await axios.post('http://127.0.0.1:8000/events/', payload, {
@@ -68,7 +75,7 @@ const CreateEventForm = () => {
                 }
             });
             setMessage("Event created successfully!");
-            setTimeout(() => navigate('/dashboard'), 2000);
+            setTimeout(() => navigate('/dashboard'), 2000);  //Navigate to dashboard after 2 seconds
         } catch(err) {
             const errorMsg = err.response?.data?.detail || 'Failed to create event';
             setMessage(errorMsg);
@@ -86,6 +93,9 @@ const CreateEventForm = () => {
 
             <input type="date" name="date" value={date} placeholder="Enter Date" onChange={handleChange} />
             {errors.date && <p className="error">{errors.date}</p>}
+
+            <input type="number" name="capacity" value={capacity} placeholder="Enter Capacity" onChange={handleChange}/>
+            {errors.capacity && <p className="error">{errors.capacity}</p>}
 
             <input type="text" name="location" value={location} placeholder="Enter Location" onChange={handleChange} />
             {errors.location && <p className="error">{errors.location}</p>}

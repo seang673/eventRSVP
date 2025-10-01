@@ -41,7 +41,13 @@ function EventList(){
                     {currentEvents.map(event => (
                         <li key={event.id}>
                             <strong>{event.title}</strong> - {event.date}
-                            <RSVPForm eventId={event.id} />
+                            <p>
+                                {event.rsvp_count >= event.capacity
+                                    ? "Event is full"
+                                    : `${event.capacity - event.rsvp_count} spots left`}
+                            </p>
+
+                            <RSVPForm event={event} />
                         </li>
                     ))}
                 </ul>

@@ -10,6 +10,7 @@ import CreateEvent from './components/CreateEventForm';
 import Register from './components/RegisterForm';
 import Unauthorized from './pages/Unauthorized';
 
+const isOrganizer = user?.is_organizer;
 
 function App() {
   return (

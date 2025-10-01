@@ -2,6 +2,9 @@ from rest_framework import serializers
 from .models import Event, RSVP, CustomUser
 from django.contrib.auth.password_validation import validate_password
 
+#Validates incoming JSON before saving to database
+#Class Meta is to define metadata about the parent class
+
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
 
@@ -18,12 +21,17 @@ class RegisterSerializer(serializers.ModelSerializer):
         )
         return user
 
-
-#Validates incoming JSON before saving to database
 class EventSerializer(serializers.ModelSerializer):
+    rsvp_count = serializers.SerializerMethodField()
+    organizer = serializers.StringRelatedField()
+
     class Meta:
         model = Event
         fields = '__all__'  #all fields are exposed
+
+    def get_rsvp_count(self, obj):
+        return RSVP.objects.filter(event=obj).count()
+
 
 class RSVPSerializer(serializers.ModelSerializer):
     #Lets frontend display event name directly without

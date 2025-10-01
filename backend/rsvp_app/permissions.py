@@ -10,3 +10,8 @@ class IsOrganizer(BasePermission):
     def has_permission(self, request, view):
         return request.user and request.user.is_authenticated and request.user.is_organizer
 
+class IsAttendee(BasePermission):
+    message = "Only attendees can perform this action"
+
+    def has_permission(self, request, view):
+        return request.user and request.user_is_authenticated and not request.user.is_organizer
