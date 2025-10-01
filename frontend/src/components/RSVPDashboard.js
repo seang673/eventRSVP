@@ -4,7 +4,6 @@ import api from '../services/api';
 function RSVPDashboard() {
     const [rsvps, setRsvps] = useState([]);
     const [loading, setLoading] = useState(true);
-
     const userEmail = localStorage.get('email');
     const token = localStorage.getItem('token');
     const isOrganizer = localStorage.getItem('is_organizer') === 'true';
@@ -79,6 +78,7 @@ function RSVPDashboard() {
                         </tr>
                     ))}
                 </tbody>
+
             </table>
         </div>
     );

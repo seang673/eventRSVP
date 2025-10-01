@@ -15,19 +15,24 @@ function RSVPForm({ event }) {
             return;
         }
         try{
-            await api.post('/rsvps/', {
+            const token = localStorage.getItem('token');
+            const res = await api.post('/rsvps/', {
                 name,
                 email,
                 message,
                 event: event,
-        });
-        alert('RSVP sumbitted successfully!');
-        setName('');
-        setEmail('');
-        setMessage('');
+            }, {
+            headers: {
+                Authorization: `Bearer ${token}`},
+            });
+            if (res.status === 201){
+                alert('RSVP submitted successfully!'); // ✅ popup
+                navigate('/dashboard') //Navigate to RSVP Dashboard
+
+            }
         } catch(err){
             console.error(err);
-            alert('Failed to submit RSVP');
+            alert('Failed to submit RSVP. Please Try Again');
             }
         };
 

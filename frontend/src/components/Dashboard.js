@@ -36,7 +36,7 @@ const Dashboard = () => {
             {isOrganizer ? (
                 <button onClick={() => navigate('/create-event')}>Create Event</button>
             ): (
-                <button onClick= {() => navigate('/rsvp')}>RSVP To Event</button>
+                <button onClick= {() => navigate('/rsvp')}>RSVP To Events</button>
             )}
         </div>
     );
