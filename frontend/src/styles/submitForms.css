@@ -1,0 +1,18 @@
+.error{
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 4px;
+}
+
+.back-button{
+  background-color: #185289;
+  color:white;
+  border: none;
+  padding: 8px 12px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+.back-button:hover{
+    background:rgb(43, 43, 43)
+}

@@ -38,6 +38,7 @@ const Dashboard = () => {
             ): (
                 <button onClick= {() => navigate('/rsvp')}>RSVP To Events</button>
             )}
+            <button onClick={() => navigate('/profile')}>Profile</button>
         </div>
     );
 };

@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import api from '../services/api';
+import useNavigate from 'react-router-dom';
+import '../styles/submitForms.css';
 
 function RSVPForm({ event }) {
     const [name, setName] = useState('');
@@ -7,6 +9,8 @@ function RSVPForm({ event }) {
     const [message, setMessage] = useState('');
     const [confirmed, setConfirmed] = useState(true);
     const [error, setError] = useState('')
+
+    navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -37,14 +41,22 @@ function RSVPForm({ event }) {
         };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h3>RSVP for {event.title}</h3>
-            {error && <p className="error">{error}</p>}
-            <input type = "text" value={name} onChange={e => setName(e.target.value)} placeholder="Enter Name" required/>
-            <input type = "email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter Email" required/>
-            <textarea value={message} onChange={e => setMessage(e.target.value)} placeholder="Message (optional)"/>
-            <button type="submit">Submit RSVP</button>
-        </form>
+        <div className="form-container">
+            <div className="formHeader">
+                <button className="back-button" onClick={() => navigate(-1)}>Back</button>
+                <h2>RSVP for {event.title}</h2>
+            </div>
+            <div className="formBody">
+                <form onSubmit={handleSubmit}>
+                    {error && <p className="error">{error}</p>}
+                    <input type = "text" value={name} onChange={e => setName(e.target.value)} placeholder="Enter Name" required/>
+                    <input type = "email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter Email" required/>
+                    <textarea value={message} onChange={e => setMessage(e.target.value)} placeholder="Message (optional)"/>
+                    <button type="submit">Submit RSVP</button>
+                </form>
+            </div>
+        </div>
+
     );
 };
 

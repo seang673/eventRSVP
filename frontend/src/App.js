@@ -3,7 +3,8 @@ import './styles/App.css';
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import EventList from './components/EventList';
-import RSVPDashboard from './components/RSVPDashboard';
+import Dashboard from './components/Dashboard';
+import Profile from './components/UserProfilePage';
 import Login from './components/LoginForm';
 import OrganizerRoute from './components/OrganizerRoute';
 import CreateEvent from './components/CreateEventForm';
@@ -16,8 +17,9 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Register />} />
-        <Route path="/dashboard" element={<RSVPDashboard />} />
+        <Route path="/" element={<App />} />
+        <Route path="/register" element={<Register/>} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register/>} />
         <Route path="/create-event" element={

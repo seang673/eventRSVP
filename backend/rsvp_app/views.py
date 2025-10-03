@@ -1,7 +1,11 @@
 from django.shortcuts import render
+from django.contrib.uth import authenticate
 from django_filters.rest_framework import DjangoFilterBackend
 from django.core.exceptions import PermissionDenied, ValidationError
-from rest_framework import viewsets, filters, generics
+from rest_framework import viewsets, filters, generics, status
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAdminUser, IsAuthenticated, BasePermission
 from rest_framework.response import Response
@@ -17,6 +21,26 @@ class RegisterView(generics.CreateAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = RegisterSerializer
     authentication_classes = [SessionAuthentication]
+
+class CustomLoginView(APIView):
+    def post(self, request):
+        username = request.data.get('username')
+        password = request.data.get('password')
+        user = authenticate(username=username, password=password)
+
+        if user is not None:
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                'access': str(refresh.access_token),
+                'refresh': str(refresh),
+                'user': {
+                    'id': user.id,
+                    'username': user.username,
+                    'email': user.email,
+                    'is_organizer': user.is_organizer
+                }
+            })
+        return Response({'error': 'Invalid credentils'}, status=status.HTTP_401_UNAUTHORIZED)
 
 class CreateEventView(generics.CreateAPIView):
     permission_classes = [IsOrganizer]

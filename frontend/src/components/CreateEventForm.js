@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
-import '../styles/EventForm';
+import '../styles/submitForms.css';
 
 const CreateEventForm = () => {
     const [title, setTitle] = useState('');
@@ -83,26 +83,33 @@ const CreateEventForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h2>Create A New Event</h2>
-            <input type="text" name="title" value={title} placeholder="Enter Title" onChange={handleChange} />
-            {errors.title && <p className="error">{errors.title}</p>}
+        <div className="formContainer">
+            <div className = "formHeader">
+                <button className="back-button" onClick={() => navigate(-1)}>Back</button>
+                <h2>Create A New Event</h2>
+            </div>
+            <div className="formBody">
+                <form onSubmit={handleSubmit}>
+                    <input type="text" name="title" value={title} placeholder="Enter Title" onChange={handleChange} />
+                    {errors.title && <p className="error">{errors.title}</p>}
 
-            <input type="text" name="description" value={description} placeholder="Enter Description" onChange={handleChange} />
-            {errors.description && <p className="error">{errors.description}</p>}
+                    <input type="text" name="description" value={description} placeholder="Enter Description" onChange={handleChange} />
+                    {errors.description && <p className="error">{errors.description}</p>}
 
-            <input type="date" name="date" value={date} placeholder="Enter Date" onChange={handleChange} />
-            {errors.date && <p className="error">{errors.date}</p>}
+                    <input type="date" name="date" value={date} placeholder="Enter Date" onChange={handleChange} />
+                    {errors.date && <p className="error">{errors.date}</p>}
 
-            <input type="number" name="capacity" value={capacity} placeholder="Enter Capacity" onChange={handleChange}/>
-            {errors.capacity && <p className="error">{errors.capacity}</p>}
+                    <input type="number" name="capacity" value={capacity} placeholder="Enter Capacity" onChange={handleChange}/>
+                    {errors.capacity && <p className="error">{errors.capacity}</p>}
 
-            <input type="text" name="location" value={location} placeholder="Enter Location" onChange={handleChange} />
-            {errors.location && <p className="error">{errors.location}</p>}
+                    <input type="text" name="location" value={location} placeholder="Enter Location" onChange={handleChange} />
+                    {errors.location && <p className="error">{errors.location}</p>}
 
-            <button type="submit">Create Event</button>
-            <p>{message}</p>
-        </form>
+                    <button type="submit">Create Event</button>
+                    <p>{message}</p>
+                </form>
+            </div>
+        </div>
     );
 };
 
