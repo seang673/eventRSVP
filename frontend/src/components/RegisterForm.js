@@ -51,7 +51,7 @@ const RegisterForm = () => {
             </label>
             <button type="submit">Register</button>
             <p>{message}</p>
-            <p>Are you new here? <Link to="/signup">Sign Up</Link></p>
+            <p>Are you new here? <Link to="/login">Sign Up</Link></p>
         </form>
     );
 };

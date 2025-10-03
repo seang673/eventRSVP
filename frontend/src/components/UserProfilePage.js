@@ -1,7 +1,9 @@
 import React, {useEffect, useState} from 'react';
+import {useNavigte} from 'react-router-dom';
 import api from '../services/api';
+import { handleLogout } from '../utils/auth';
 
-function RSVPDashboard() {
+function UserProfilePage() {
     const [rsvps, setRsvps] = useState([]);
     const [loading, setLoading] = useState(true);
     const userEmail = localStorage.get('email');
@@ -51,7 +53,8 @@ function RSVPDashboard() {
 
     return (
         <div>
-            <h2>RSVP Dashboard</h2>
+            <button onClick={() => handleLogout(navigate)}>Logout</button>
+            <h2>RSVP Info</h2>
             //RSVP Table
             <table>
                 <thead>

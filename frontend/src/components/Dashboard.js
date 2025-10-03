@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
+import {handleLogout} from '../utils/auth';
 
 const Dashboard = () => {
     const [userData, setUserData] = useState(null);
@@ -29,6 +30,7 @@ const Dashboard = () => {
 
     return (
         <div>
+            <button onClick={() => handleLogout(navigate)}>Logout</button>
             <h1>Welcome, {userData.username}</h1>
             <p>Email: {userData.email}</p>
             <p>Role: {userData.is_organizer ? 'Organizer' : 'Attendee'}</p>
