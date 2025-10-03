@@ -30,17 +30,18 @@ const Dashboard = () => {
 
     return (
         <div>
-            <button onClick={() => handleLogout(navigate)}>Logout</button>
             <h1>Welcome, {userData.username}</h1>
             <p>Email: {userData.email}</p>
-            <p>Role: {userData.is_organizer ? 'Organizer' : 'Attendee'}</p>
+            <p>Your Role: {userData.is_organizer ? 'Organizer' : 'Attendee'}</p>
             <p>{userData.message}</p>
             {isOrganizer ? (
                 <button onClick={() => navigate('/create-event')}>Create Event</button>
             ): (
-                <button onClick= {() => navigate('/rsvp')}>RSVP To Events</button>
-            )}
+                <button onClick= {() => navigate('/events')}>Events</button>
+            )
+            }
             <button onClick={() => navigate('/profile')}>Profile</button>
+            <button onClick={() => handleLogout(navigate)}>Logout</button>
         </div>
     );
 };

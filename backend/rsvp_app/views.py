@@ -115,12 +115,15 @@ class RSVPViewSet(viewsets.ModelViewSet):
         instance.delete()
 
     def perform_create(self, serializer):
+        user = self.request.user
         event = serializer.validated_data['event']
         current_rsvp_count = RSVP.objects.filter(event=event).count()
 
         if current_rsvp_count >= event.capacity:
             raise ValidationError("This event has reached its RSVP limit.")
 
+        if user.is_organizer:
+            raise PermissionDenied("Organizers cannot RSVP to events.")
         serializer.save()
 
 
