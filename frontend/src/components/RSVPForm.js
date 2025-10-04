@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import api from '../services/api';
 import useNavigate from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 import '../styles/submitForms.css';
 
 function RSVPForm({ event }) {
@@ -31,7 +32,7 @@ function RSVPForm({ event }) {
             });
             if (res.status === 201){
                 alert('RSVP submitted successfully!'); // ✅ popup
-                navigate('/dashboard') //Navigate to RSVP Dashboard
+                navigate('/events') //Navigate to RSVP Dashboard
 
             }
         } catch(err){

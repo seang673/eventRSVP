@@ -10,7 +10,7 @@ const Dashboard = () => {
     useEffect(() => {
         const token = localStorgage.getItem('token');
         if (!token) {
-            navigate('/login'); //Redirect to login screen if token not found
+            navigate('/login'); //Redirect to login screen if user's token not found
             return;
         }
 
@@ -34,8 +34,11 @@ const Dashboard = () => {
             <p>Email: {userData.email}</p>
             <p>Your Role: {userData.is_organizer ? 'Organizer' : 'Attendee'}</p>
             <p>{userData.message}</p>
+            {isOrganizer &&
+                (<button onClick={() => navigate('/create-event')}>Create Event</button>)
+            }
             {isOrganizer ? (
-                <button onClick={() => navigate('/create-event')}>Create Event</button>
+                <button onClick={() => navigate('/events')}>Your Created Events</button>
             ): (
                 <button onClick= {() => navigate('/events')}>Events</button>
             )

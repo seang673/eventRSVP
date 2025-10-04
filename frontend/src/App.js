@@ -8,6 +8,7 @@ import Profile from './components/UserProfilePage';
 import Login from './components/LoginForm';
 import OrganizerRoute from './components/OrganizerRoute';
 import CreateEvent from './components/CreateEventForm';
+import RSVPForm from './components/RSVPForm';
 import Register from './components/RegisterForm';
 import Unauthorized from './pages/Unauthorized';
 
@@ -22,6 +23,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register/>} />
+        <Route path="/rsvp" element={<RSVPForm/>} />
         <Route path="/events" element={<EventList/>} />
         <Route path="/create-event" element={
           <OrganizerRoute>

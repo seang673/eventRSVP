@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import api from '../services/api';
 import RSVPForm from './RSVPForm';
 
@@ -7,6 +8,9 @@ function EventList(){
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const eventsPerPage = 5;
+    const isOrganizer = localStorage.getItem('is_organizer') === 'true';
+
+    const navigate = useNavigate();
 
     const fetchEvents = () => {
         api.get('/events/')
@@ -27,9 +31,12 @@ function EventList(){
 
     const totalPages = Math.ceil(filteredEvents.length / eventsPerPage);
 
+    const handleRSVP = (event) => {
+        navigate('/rsvp', {state: { event } });
+    };
     return (
         <div>
-            <h2>Upcoming Events</h2>
+            <h2>Upcoming Events For You!</h2>
             <input
                 type = "text"
                 placeholder="Search events..."
@@ -39,16 +46,22 @@ function EventList(){
             <button onClick={fetchEvents}>Refresh Events</button>
                 <ul>
                     {currentEvents.map(event => (
-                        <li key={event.id}>
-                            <strong>{event.title}</strong> - {event.date}
+                        <div key={event.id}>
+                            <h2><strong>{event.title}</strong></h2>
+                            <p>{event.date}</p>
+                            <p>Location: {event.location}</p>
+                            <p>{event.description}</p>
                             <p>
                                 {event.rsvp_count >= event.capacity
                                     ? "Event is full"
                                     : `${event.capacity - event.rsvp_count} spots left`}
                             </p>
-
-                            <RSVPForm event={event} />
-                        </li>
+                            {!isOrganizer && (
+                                <button onClick={() => handleRSVP(event)}>
+                                    RSVP
+                                </button>
+                            )}
+                        </div>
                     ))}
                 </ul>
                 <div>
