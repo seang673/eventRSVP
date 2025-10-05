@@ -37,11 +37,8 @@ const Dashboard = () => {
             {isOrganizer &&
                 (<button onClick={() => navigate('/create-event')}>Create Event</button>)
             }
-            {isOrganizer ? (
-                <button onClick={() => navigate('/events')}>Your Created Events</button>
-            ): (
-                <button onClick= {() => navigate('/events')}>Events</button>
-            )
+            {!isOrganizer &&
+            (<button onClick={() => navigate('/events')}>Events</button>)
             }
             <button onClick={() => navigate('/profile')}>Profile</button>
             <button onClick={() => handleLogout(navigate)}>Logout</button>

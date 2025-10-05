@@ -35,22 +35,6 @@ function EventList(){
         navigate('/rsvp', {state: { event } });
     };
 
-    //For organizers to delete their own created events
-    const handleDelete = async (eventId) => {
-        const token = localStorage.getItem('token');
-        try {
-            await axios.delete(`http://127.0.0.1:8000/api/events/${eventId}`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
-        alert('Event deleted successfully');
-        setEvents(prev=> prev.filter(e => e.id !== eventId))
-    } catch(err){
-        alert('Failed to delete event');
-        console.log("Failed to delete event", err);
-    }
-}
 
     return (
         <div>
@@ -78,11 +62,6 @@ function EventList(){
                             {!isOrganizer && (
                                 <button onClick={() => handleRSVP(event)}>
                                     RSVP
-                                </button>
-                            )}
-                            {isOrganizer && (
-                                <button className="delete-button" onClick={() => handleDelete(event.id)}>
-                                    ❌Delete
                                 </button>
                             )}
                         </div>

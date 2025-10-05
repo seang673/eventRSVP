@@ -70,6 +70,13 @@ class OrganizerRSVPListView(ListAPIView):
     def get_queryset(self):
         return RSVP.objects.filter(event__organizer=self.request.user)
 
+class OrganizerEventListView(ListAPIView):
+    serializer_class = EventSerializer
+    permission_classes = [IsAuthenticated, IsOrganizer]
+
+    def get_queryset(self):
+        return Event.objects.filter(organizer=self.request.user)
+
 class EventViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
