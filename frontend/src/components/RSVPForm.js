@@ -8,7 +8,6 @@ function RSVPForm({ event }) {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
-    const [confirmed, setConfirmed] = useState(true);
     const [error, setError] = useState('')
 
     const location = useLocation();

@@ -29,7 +29,6 @@ class RSVP(models.Model):
     email = models.EmailField()
     message = models.TextField(blank=True)
     event = models.ForeignKey(Event, on_delete = models.CASCADE)
-    confirmed = models.BooleanField(default=False)
 
     class Meta:
         db_table='rsvp'
