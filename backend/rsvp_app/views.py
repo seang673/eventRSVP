@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.contrib.uth import authenticate
+from django.contrib.auth import authenticate
 from django_filters.rest_framework import DjangoFilterBackend
 from django.core.exceptions import PermissionDenied, ValidationError
 from rest_framework import viewsets, filters, generics, status

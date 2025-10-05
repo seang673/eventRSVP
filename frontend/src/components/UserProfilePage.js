@@ -86,4 +86,4 @@ function UserProfilePage() {
         </div>
     );
 }
-export default RSVPDashboard;
+export default UserProfilePage;

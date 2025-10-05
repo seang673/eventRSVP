@@ -11,6 +11,9 @@ function RSVPForm({ event }) {
     const [confirmed, setConfirmed] = useState(true);
     const [error, setError] = useState('')
 
+    const location = useLocation();
+    const event = location.state?.event;
+
     navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -25,7 +28,7 @@ function RSVPForm({ event }) {
                 name,
                 email,
                 message,
-                event: event,
+                event: event.id,
             }, {
             headers: {
                 Authorization: `Bearer ${token}`},

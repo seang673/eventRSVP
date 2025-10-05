@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import api from '../services/api';
-import RSVPForm from './RSVPForm';
 
 function EventList(){
     const [events, setEvents] = useState([]);
@@ -31,9 +30,28 @@ function EventList(){
 
     const totalPages = Math.ceil(filteredEvents.length / eventsPerPage);
 
+    //For attendees to RSVP
     const handleRSVP = (event) => {
         navigate('/rsvp', {state: { event } });
     };
+
+    //For organizers to delete their own created events
+    const handleDelete = async (eventId) => {
+        const token = localStorage.getItem('token');
+        try {
+            await axios.delete(`http://127.0.0.1:8000/api/events/${eventId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        alert('Event deleted successfully');
+        setEvents(prev=> prev.filter(e => e.id !== eventId))
+    } catch(err){
+        alert('Failed to delete event');
+        console.log("Failed to delete event", err);
+    }
+}
+
     return (
         <div>
             <h2>Upcoming Events For You!</h2>
@@ -43,6 +61,7 @@ function EventList(){
                 value = {searchTerm}
                 onChange={e => setSearchTerm(e.target.value)}
             />
+            //For refreshing events
             <button onClick={fetchEvents}>Refresh Events</button>
                 <ul>
                     {currentEvents.map(event => (
@@ -59,6 +78,11 @@ function EventList(){
                             {!isOrganizer && (
                                 <button onClick={() => handleRSVP(event)}>
                                     RSVP
+                                </button>
+                            )}
+                            {isOrganizer && (
+                                <button className="delete-button" onClick={() => handleDelete(event.id)}>
+                                    ❌Delete
                                 </button>
                             )}
                         </div>
