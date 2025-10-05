@@ -19,6 +19,7 @@ function LoginForm({ setToken }) {
             });
             setToken(res.data.access);
             localStorage.setItem('token', res.data.access);
+            localStorage.setItem('username', res.data.username);
             localStorage.setItem('is_organizer', res.data.is_organizer);
             alert(`Login is successful, welcome back ${username}!`)
             navigate('/dashboard');

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useNavigte} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import api from '../services/api';
 import { handleLogout } from '../utils/auth';
 
@@ -8,7 +8,6 @@ function UserProfilePage() {
     const [loading, setLoading] = useState(true);
     const userEmail = localStorage.get('email');
     const token = localStorage.getItem('token');
-    const isOrganizer = localStorage.getItem('is_organizer') === 'true';
 ;
     if (!token) return <Navigate to="/unauthorized" />;
 
@@ -49,12 +48,13 @@ function UserProfilePage() {
 
     if (loading) return <p>Loading the RSVPs...</p>
 
-    const filteredRsvps = isOrganizer ? rsvps: rsvps.filter(rsvp => rsvp.email === userEmail);
-
+    const filteredRsvps = rsvps.filter(rsvp => rsvp.email === userEmail);
+    const username = localStorage.getItem('username')
     return (
         <div>
             <button onClick={() => handleLogout(navigate)}>Logout</button>
-            <h2>RSVP Info</h2>
+            <h2>{username}'s Profile' </h2>
+            <h3>Your Submitted RSVPS</h3>
             //RSVP Table
             <table>
                 <thead>
@@ -64,6 +64,7 @@ function UserProfilePage() {
                         <th>Email</th>
                         <th>Message</th>
                         <th>Confirmed</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -74,7 +75,7 @@ function UserProfilePage() {
                             <td>{rsvp.name}</td>
                             <td>{rsvp.email}</td>
                             <td>{rsvp.message}</td>
-                            <td>{rsvp.confirmed ? '✅' : '❌'}</td>
+                            <td>✅</td>
                             <td>
                                 <button onClick={() => handleCancel(rsvp.id)}>Cancel</button>
                             </td>

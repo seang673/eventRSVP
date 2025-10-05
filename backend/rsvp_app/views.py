@@ -4,6 +4,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from django.core.exceptions import PermissionDenied, ValidationError
 from rest_framework import viewsets, filters, generics, status
 from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.authentication import SessionAuthentication
@@ -62,6 +63,12 @@ class DashboardView(generics.RetrieveAPIView):
             "is_organizer" :user.is_organizer,
             "message": "Welcome to the dashboard!"
         })
+class OrganizerRSVPListView(ListAPIView):
+    serializer_clas = RSVPSerializer
+    permission_classes = [IsAuthenticated, IsOrganizer]
+
+    def get_queryset(self):
+        return RSVP.objects.filter(event__organizer=self.request.user)
 
 class EventViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all()

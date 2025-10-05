@@ -4,7 +4,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import EventList from './components/EventList';
 import Dashboard from './components/Dashboard';
-import Profile from './components/UserProfilePage';
+import Profile from './components/AttendeeProfile';
 import Login from './components/LoginForm';
 import OrganizerRoute from './components/OrganizerRoute';
 import CreateEvent from './components/CreateEventForm';

@@ -28,9 +28,11 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = '__all__'  #all fields are exposed
+        depth = 1  #automatically includes nested organizer data
 
     def get_rsvp_count(self, obj):
         return RSVP.objects.filter(event=obj).count()
+
 
 
 class RSVPSerializer(serializers.ModelSerializer):
