@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {Navigate, useNavigate} from 'react-router-dom';
 import api from '../services/api';
 import { handleLogout } from '../utils/auth';
 
@@ -8,7 +8,9 @@ function UserProfilePage() {
     const [loading, setLoading] = useState(true);
     const userEmail = localStorage.get('email');
     const token = localStorage.getItem('token');
-;
+
+    const navigate = useNavigate();
+
     if (!token) return <Navigate to="/unauthorized" />;
 
     const fetchRsvps = async () => {

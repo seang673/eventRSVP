@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {Navigate, useNavigate} from 'react-router-dom';
 import api from '../services/api';
 import { handleLogout } from '../utils/auth';
 
@@ -11,6 +11,7 @@ function OrganizerProfile() {
     const token = localStorage.getItem('token');
     const isOrganizer = localStorage.getItem('is_organizer') === 'true';
 
+    const navigate = useNavigate();
     if (!token) return <Navigate to="/unauthorized" />;
 
     const fetchRsvps = async () => {
@@ -55,11 +56,11 @@ function OrganizerProfile() {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            if (res.status === 204 || res.status === 200) {
-                setEvents(prev => prev.filter(r => r.id !== rsvpId));
-            } else {
-                console.error("Failed to cancel RSVP");
-            }
+            setEvents(res.data);
+        }catch(err){
+            console.log("Failed to fetch events", err);
+        } finally {
+            setLoading(false);
         }
 
     }
@@ -84,7 +85,6 @@ function OrganizerProfile() {
         }
 
         }
-    }
 
     useEffect(() => {
         fetchRsvps();
@@ -119,7 +119,7 @@ function OrganizerProfile() {
                             <td>{event.location}</td>
                             <td>{event.capacity}</td>
                             <td>{event.rsvp_count}</td>
-                            <td><button onClick={() => handleCancelRSVPS(rsvp.id)}>Cancel</button></td>
+                            <td><button onClick={() => handleCancelEvents(event.id)}>Cancel</button></td>
                         </tr>
                         ))}
                     </tbody>
@@ -160,4 +160,5 @@ function OrganizerProfile() {
 
         </div>
     );
+}
 export default OrganizerProfile;
