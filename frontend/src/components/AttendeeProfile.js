@@ -34,6 +34,7 @@ function UserProfilePage() {
             });
 
             if (res.status === 204 || res.status === 200) {
+                alert("RSVP is cancelled successfully")
                 setRsvps(prev => prev.filter(r => r.id !== rsvpId));
             } else {
                 console.error("Failed to cancel RSVP");

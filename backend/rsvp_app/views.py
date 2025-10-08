@@ -64,7 +64,7 @@ class DashboardView(generics.RetrieveAPIView):
             "message": "Welcome to the dashboard!"
         })
 class OrganizerRSVPListView(ListAPIView):
-    serializer_clas = RSVPSerializer
+    serializer_class = RSVPSerializer
     permission_classes = [IsAuthenticated, IsOrganizer]
 
     def get_queryset(self):
