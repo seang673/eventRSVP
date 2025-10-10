@@ -8,7 +8,7 @@ const Dashboard = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const token = localStorgage.getItem('token');
+        const token = localStorage.getItem('token');
         if (!token) {
             navigate('/login'); //Redirect to login screen if user's token not found
             return;
@@ -26,13 +26,14 @@ const Dashboard = () => {
         });
     }, [navigate]);
 
+    const isOrganizer =  userData.is_organizer === 'true';
     if (!userData) return <p>Loading dashboard...</p>
 
     return (
         <div>
             <h1>Welcome, {userData.username}</h1>
             <p>Email: {userData.email}</p>
-            <p>Your Role: {userData.is_organizer ? 'Organizer' : 'Attendee'}</p>
+            <p>Your Role: {isOrganizer ? 'Organizer' : 'Attendee'}</p>
             <p>{userData.message}</p>
             {isOrganizer &&
                 (<button onClick={() => navigate('/create-event')}>Create Event</button>)

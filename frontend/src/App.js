@@ -14,9 +14,10 @@ import Register from './components/RegisterForm';
 import Unauthorized from './pages/Unauthorized';
 import Welcome from './components/Welcome';
 
-const isOrganizer = user?.is_organizer;
+
 
 function App() {
+  
   return (
     <Router>
       <Routes>

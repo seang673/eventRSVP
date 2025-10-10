@@ -1,23 +1,22 @@
 import React, {useState} from 'react';
 import api from '../services/api';
-import useNavigate from 'react-router-dom';
-import {useLocation} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import '../styles/submitForms.css';
 
-function RSVPForm({ event }) {
+function RSVPForm() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
     const [error, setError] = useState('')
 
     const location = useLocation();
-    const event = location.state?.event;
+    const selectedEvent = location.state?.event;
 
-    navigate = useNavigate();
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (event.rsvp_count >= event.capacity){
+        if (selectedEvent.rsvp_count >= selectedEvent.capacity){
             setError("This event is full. You cannot RSVP")
             return;
         }
@@ -27,7 +26,7 @@ function RSVPForm({ event }) {
                 name,
                 email,
                 message,
-                event: event.id,
+                event: selectedEvent.id,
             }, {
             headers: {
                 Authorization: `Bearer ${token}`},
@@ -47,7 +46,7 @@ function RSVPForm({ event }) {
         <div className="form-container">
             <div className="formHeader">
                 <button className="back-button" onClick={() => navigate(-1)}><b>🔙Back</b></button>
-                <h2>RSVP for {event.title}</h2>
+                <h2>RSVP for {selectedEvent.title}</h2>
             </div>
             <div className="formBody">
                 <form onSubmit={handleSubmit}>
