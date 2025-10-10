@@ -66,7 +66,7 @@ const CreateEventForm = () => {
             return;
         }
         const token = localStorage.getItem('token');
-        const payload= {title, description, date, capacity, location};
+        const payload= {title, date, location, capacity, description};
 
         try{
             const res = await axios.post('http://127.0.0.1:8000/events/', payload, {

@@ -8,7 +8,7 @@ from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.authentication import SessionAuthentication
-from rest_framework.permissions import IsAdminUser, IsAuthenticated, BasePermission
+from rest_framework.permissions import IsAdminUser, IsAuthenticated, BasePermission, AllowAny
 from rest_framework.response import Response
 from .models import Event, RSVP, CustomUser
 from .serializers import EventSerializer, RSVPSerializer, RegisterSerializer
@@ -24,9 +24,13 @@ class RegisterView(generics.CreateAPIView):
     authentication_classes = [SessionAuthentication]
 
 class CustomLoginView(APIView):
+    authentication_classes = [] #No auth required for login
+    permission_classes = [AllowAny]  #Allow public access
+
     def post(self, request):
         username = request.data.get('username')
         password = request.data.get('password')
+
         user = authenticate(username=username, password=password)
 
         if user is not None:
@@ -41,7 +45,7 @@ class CustomLoginView(APIView):
                     'is_organizer': user.is_organizer
                 }
             })
-        return Response({'error': 'Invalid credentils'}, status=status.HTTP_401_UNAUTHORIZED)
+        return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
 class CreateEventView(generics.CreateAPIView):
     permission_classes = [IsOrganizer]
@@ -80,17 +84,17 @@ class OrganizerEventListView(ListAPIView):
 class EventViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
+
+    #Filtering, searching, and ordering details
     filter_backends = [filters.SearchFilter, DjangoFilterBackend]
     search_fields = ['title', 'location', 'description']
     ordering_fields = ['date', 'title', 'location']
     filterset_fields = ['date', 'location']
-    permission_classes = [IsAuthenticated, IsOrganizer, IsAttendee]
+    permission_classes = [IsAuthenticated, IsOrganizer]
 
-    ordering = ['date']
 
     def get_queryset(self):
         user = self.request.user
-
         logger.debug(f"User {user.username} is_organizer={user.is_organizer}")
 
         if not user.is_authenticated:
@@ -99,16 +103,19 @@ class EventViewSet(viewsets.ModelViewSet):
         if user.is_organizer:
             #Organizers will only see their own events
             return Event.objects.filter(organizer=user)
+        #Attendees see all events
         return Event.objects.all()
 
 
     def perform_create(self, serializer):
+        #Organizer is auto-assigned
         serializer.save(organizer=self.request.user)
 
 class RSVPViewSet(viewsets.ModelViewSet):
     queryset = RSVP.objects.all()
     serializer_class = RSVPSerializer
-    permission_classes = [IsAuthenticated, IsOrganizer, IsAttendee] #Only admin users (with tokens) can access
+    permission_classes = [IsAuthenticated, IsAttendee] #Only authenticated users (with tokens) can access
+
     filter_backends = [filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend]
     ordering_fields = ['name', 'confirmed']
     ordering=['-confirmed']
@@ -117,6 +124,10 @@ class RSVPViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
+
+        logger.debug(f"User {user.username} attempting to RSVP to event")
+        if not user.is_authenticated:
+            return RSVP.objects.none()
 
         if user.is_organizer:
             #Organizers will only see RSVPs for their own events
@@ -136,8 +147,6 @@ class RSVPViewSet(viewsets.ModelViewSet):
         if current_rsvp_count >= event.capacity:
             raise ValidationError("This event has reached its RSVP limit.")
 
-        if user.is_organizer:
-            raise PermissionDenied("Organizers cannot RSVP to events.")
         serializer.save()
 
 
