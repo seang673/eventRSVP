@@ -29,6 +29,7 @@ class RSVP(models.Model):
     email = models.EmailField()
     message = models.TextField(blank=True)
     event = models.ForeignKey(Event, on_delete = models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         db_table='rsvp'

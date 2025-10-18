@@ -39,14 +39,14 @@ function OrganizerProfile() {
             });
 
             if (res.status === 204 || res.status === 200) {
-                alert("The attendee's RSVP is cancelled successfully")
+                alert("This attendee's RSVP is cancelled successfully")
                 setRsvps(prev => prev.filter(r => r.id !== rsvpId));
             } else {
-                console.error("Failed to cancel RSVP");
+                console.error("Failed to cancel the attendee's RSVP");
             }
 
         } catch(err) {
-            console.error("Error canceling RSVP:", err);
+            console.error("Error canceling this RSVP:", err);
         }
     };
 

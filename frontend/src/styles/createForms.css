@@ -1,0 +1,31 @@
+.error{
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 4px;
+}
+
+.back-button{
+  background-color: #381889;
+  color:white;
+  border: none;
+  top: 20px;
+  right: 20px;
+  border-radius:4px;
+  padding: 8px 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.formContainer{
+  background-color:rgb(108, 160, 197);
+  justify-content: center;
+  align-items: center;
+}
+
+.formBody{
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  justify-content: space-between;
+  padding:20px;
+}

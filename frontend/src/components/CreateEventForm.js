@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
-import '../styles/submitForms.css';
+import '../styles/createForms.css';
 
 const CreateEventForm = () => {
     const [title, setTitle] = useState('');
@@ -84,11 +84,10 @@ const CreateEventForm = () => {
 
     return (
         <div className="formContainer">
-            <div className = "formHeader">
-                <button className="back-button" onClick={() => navigate(-1)}><b>🔙Back</b></button>
-                <h2>Create A New Event</h2>
-            </div>
+            <button className="back-button" onClick={() => navigate(-1)}><b>🔙Back</b></button>
+
             <div className="formBody">
+                <h2>Create A New Event</h2>
                 <form onSubmit={handleSubmit}>
                     <input type="text" name="title" value={title} placeholder="Enter Title" onChange={handleChange} />
                     {errors.title && <p className="error">{errors.title}</p>}

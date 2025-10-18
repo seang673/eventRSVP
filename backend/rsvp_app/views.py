@@ -112,15 +112,15 @@ class EventViewSet(viewsets.ModelViewSet):
         serializer.save(organizer=self.request.user)
 
 class RSVPViewSet(viewsets.ModelViewSet):
-    queryset = RSVP.objects.all()
+    queryset = RSVP.objects.all().order_by('-timestamp')
     serializer_class = RSVPSerializer
     permission_classes = [IsAuthenticated, IsAttendee] #Only authenticated users (with tokens) can access
 
     filter_backends = [filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend]
-    ordering_fields = ['name', 'confirmed']
-    ordering=['-confirmed']
+    ordering_fields = ['name']
+    ordering=['-timestamp']
     search_fields = ['name', 'email', 'message']
-    filterset_fields = ['confirmed', 'event']
+    filterset_fields = ['event', 'email', 'timestamp']
 
     def get_queryset(self):
         user = self.request.user
@@ -142,11 +142,18 @@ class RSVPViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         user = self.request.user
         event = serializer.validated_data['event']
-        current_rsvp_count = RSVP.objects.filter(event=event).count()
+        email = serializer.validated_data['email']
 
+        #To check if user has already RSVP'd to the event
+        if RSVP.objects.filter(event=event, email=email).exists():
+            raise ValidationError("You have already RSVP'd to this event.")
+
+        #Check if the event is at capacity
+        current_rsvp_count = RSVP.objects.filter(event=event).count()
         if current_rsvp_count >= event.capacity:
             raise ValidationError("This event has reached its RSVP limit.")
 
+        #save the RSVP
         serializer.save()
 
 
