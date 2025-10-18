@@ -35,12 +35,9 @@ const Dashboard = () => {
             <p>Email: {userData.email}</p>
             <p>Your Role: {isOrganizer ? 'Organizer' : 'Attendee'}</p>
             <p>{userData.message}</p>
-            {isOrganizer &&
-                (<button onClick={() => navigate('/create-event')}>Create Event</button>)
-            }
-            {!isOrganizer &&
-            (<button onClick={() => navigate('/events')}>Events</button>)
-            }
+            <button onClick={() => navigate(isOrganizer ? '/create-event' : '/events')}>
+                {isOrganizer ? 'Create Event' : 'Events'}
+            </button>
             <button onClick={() => navigate('/profile')}>Profile</button>
             <button onClick={() => handleLogout(navigate)}>Logout</button>
         </div>

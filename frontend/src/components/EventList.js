@@ -37,37 +37,41 @@ function EventList(){
 
 
     return (
-        <div>
-            <h2>Upcoming Events For You!</h2>
-            <input
-                type = "text"
-                placeholder="Search events..."
-                value = {searchTerm}
-                onChange={e => setSearchTerm(e.target.value)}
-            />
-            //For refreshing events
-            <button onClick={fetchEvents}>Refresh Events</button>
-                <ul>
-                    {currentEvents.map(event => (
-                        <div key={event.id}>
-                            <h2><strong>{event.title}</strong></h2>
-                            <p>{event.date}</p>
-                            <p>Location: {event.location}</p>
-                            <p>{event.description}</p>
-                            <p>
-                                {event.rsvp_count >= event.capacity
-                                    ? "Event is full"
-                                    : `${event.capacity - event.rsvp_count} spots left`}
-                            </p>
-                            {!isOrganizer && (
-                                <button onClick={() => handleRSVP(event)}>
-                                    RSVP
-                                </button>
-                            )}
-                        </div>
-                    ))}
-                </ul>
-                <div>
+        <div className="event-list">
+            <div className="query-section">
+                <h2>Upcoming Events For You!</h2>
+                <input
+                    type = "text"
+                    placeholder="Search events..."
+                    value = {searchTerm}
+                    onChange={e => setSearchTerm(e.target.value)}
+                />
+            </div>
+
+            <div className="events-section">
+                //For refreshing events
+                <button onClick={fetchEvents}>Refresh Events</button>
+                {currentEvents.map(event => (
+                    <div className="event-card" key={event.id}>
+                        <h2><strong>{event.title}</strong></h2>
+                        <p>{event.date}</p>
+                        <p>Location: {event.location}</p>
+                        <p>{event.description}</p>
+                        <p>
+                            {event.rsvp_count >= event.capacity
+                                ? "Event is full"
+                                : `${event.capacity - event.rsvp_count} spots left`
+                            }
+                        </p>
+                        {!isOrganizer && (
+                            <button className="rsvp-button" onClick={() => handleRSVP(event)}>
+                                RSVP
+                            </button>
+                        )}
+                    </div>
+                ))}
+
+                <div className="page-handling">
                     {Array.from({ length: totalPages }, (_, i) => (
                         <button
                             key={i}
@@ -78,6 +82,7 @@ function EventList(){
                         </button>
                     ))}
                 </div>
+            </div>
         </div>
     );
 }

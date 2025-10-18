@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useNavigate, Link} from 'react-router-dom';
 import axios from 'axios';  //API Calls
-import '../styles/authen.css'
+import '../styles/authen.css';
 
 
 
@@ -29,12 +29,17 @@ function LoginForm({ setToken }) {
     };
 
     return (
-        <form onSubmit={handleLogin}>
-            <input type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder = "Username" />
-            <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" />
-            <button type="submit">Log In</button>
-            <p>Don't have an account? <Link to="/register">Register Here</Link></p>
-        </form>
+        <div className = "auth-screen">
+            <div className="contents">
+                <form onSubmit={handleLogin}>
+                    <input type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder = "Username" />
+                    <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" />
+                    <button className="submit-btn" type="submit">Log In</button>
+                    <p>Don't have an account? <Link to="/register">Register Here</Link></p>
+                </form>
+           </div>
+        </div>
+
     );
 }
 

@@ -1,0 +1,46 @@
+.event-list{
+    background-color: rgb(63, 148, 177);
+    display: flex;
+    flex-direction:column;
+    justify-content:center;  /*Horzontally center*/
+}
+
+.query-section{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+
+.events-section{
+    display:flex;
+    flex-wrap: wrap;
+    align-items:center;
+    justify-content:center;
+}
+
+.event-card{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:space-between;
+    margin: 0 auto; /*horizontal centering */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    background-color:rgb(57, 118, 209);
+    color:white;
+    width:75%;
+    height: 10vh;
+}
+
+.rsvp-button{
+    background-color:rgb(104, 102, 102);
+    color: white;
+    padding: 8px 12px;
+    text-align:center;
+    border-radius:11px;
+    cursor:pointer;
+    transition: all 0.2s ease-in-out;
+}
+.rsvp-button:hover{
+    background-color:rgb(53, 52, 52);
+}

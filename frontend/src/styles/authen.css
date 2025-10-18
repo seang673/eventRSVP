@@ -1,0 +1,51 @@
+.welcome-screen{
+    background-color: rgb(63, 148, 177);
+    display: flex;
+    justify-content:center;  /*Horzontally center*/
+    align-items:flex-start;  /*Vertically towards the top */
+    padding-top:30px;
+}
+
+.auth-screen{
+    background-color: rgb(63, 148, 177);
+    display: flex;
+    justify-content:center;  /*Horzontally center*/
+    align-items:center;  /*Vertically towards the top */
+    padding-top:30px;
+}
+
+.contents{
+  width: 300px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  gap:8px;
+}
+
+.btn-class{
+    background-color:rgb(1, 82, 139);
+    color: white;
+    padding: 8px 13px;
+    text-align:center;
+    border-radius:11px;
+    cursor:pointer;
+    transition: all 0.2s ease-in-out;
+}
+.btn-class:hover{
+    background-color:rgb(53, 52, 52);
+}
+
+.submit-btn{
+    background-color:rgb(104, 102, 102);
+    color: white;
+    padding: 10px 14px;
+    text-align:center;
+    border-radius:11px;
+    cursor:pointer;
+    transition: all 0.2s ease-in-out;
+}
+.submit-btn:hover{
+    background-color:rgb(53, 52, 52);
+}
+
+
