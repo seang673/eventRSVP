@@ -18,7 +18,7 @@ urlpatterns = [
     path('', include(router.urls)),
     path('register/', RegisterView.as_view(), name='register'),
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
-    path('api/login/', CustomLoginView.as_view(), name='custom_login'),
+    path('login/', CustomLoginView.as_view(), name='custom_login'),
     path('rsvps/organizer/', OrganizerRSVPListView.as_view(), name='organizer-rsvps'),
     path('events/organizer/', OrganizerEventListView.as_view(), name='organizer-events'),
 
