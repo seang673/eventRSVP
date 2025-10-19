@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import api from '../services/api';
 import {useLocation, useNavigate} from 'react-router-dom';
-import '../styles/submitForms.css';
+import '../styles/createForms.css';
 
 function RSVPForm() {
     const [name, setName] = useState('');

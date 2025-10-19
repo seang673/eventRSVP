@@ -12,7 +12,6 @@ function OrganizerProfile() {
     const isOrganizer = localStorage.getItem('is_organizer') === 'true';
 
     const navigate = useNavigate();
-    if (!token) return <Navigate to="/unauthorized" />;
 
     const fetchRsvps = async () => {
         try{
@@ -89,6 +88,10 @@ function OrganizerProfile() {
         }
 
     useEffect(() => {
+        if (!token) {
+            navigate('/unauthorized');
+            return;
+        }
         fetchRsvps();
         fetchEvents();
     }, []);

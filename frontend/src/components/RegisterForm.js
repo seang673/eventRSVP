@@ -43,16 +43,34 @@ const RegisterForm = () => {
             <div className="contents">
                 <form onSubmit = {handleSubmit}>
                     <h2>Register</h2>
-                    <input type="text" name="username" placeholder="Username" onChange={handleChange} required/>
-                    <input type="email" name="email" placeholder="Email" onChange={handleChange} required/>
-                    <input type="password" name="password" placeholder="Password" onChange={handleChange} required/>
-                    <label>
-                        <input type="checkbox" name="is_organizer" onChange={handleChange} />
-                        Event Organizer?
-                    </label>
-                    <button className="submit-btn" type="submit">Register</button>
-                    <p>{message}</p>
-                    <p>Are you new here? <Link to="/login">Sign Up</Link></p>
+                    <div className="form-group">
+                        <label htmlFor="email">Email:</label>
+                        <input type="email" name="email" placeholder="Email" onChange={handleChange} required/>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="username">Username:</label>
+                        <input type="text" id="username" name="username" placeholder="Username" onChange={handleChange} required/>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="password">Password:</label>
+                        <input type="password" name="password" placeholder="Password" onChange={handleChange} required/>
+                    </div>
+                    <div className="form-group">
+                        <label>
+                            <input type="checkbox" name="is_organizer" onChange={handleChange}/>
+                                Event Organizer?
+                        </label>
+                    </div>
+
+                    <div className="submit-section">
+                        <button className="submit-btn" type="submit">Register</button>
+                    </div>
+
+
+                        <p>{message}</p>
+                        <p>Are you new here? <Link to="/login">Sign Up</Link></p>
+
+
                 </form>
             </div>
         </div>
