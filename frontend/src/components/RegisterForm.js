@@ -46,19 +46,19 @@ const RegisterForm = () => {
                     <h2>Register</h2>
                     <div className="form-group">
                         <label htmlFor="email">Email:</label>
-                        <input type="email" name="email" placeholder="Email" onChange={handleChange} required/>
+                        <input type="email" name="email" value={formData.email} placeholder="Email" onChange={handleChange} required/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="username">Username:</label>
-                        <input type="text" id="username" name="username" placeholder="Username" onChange={handleChange} required/>
+                        <input type="text" id="username" name="username" value={formData.username} placeholder="Username" onChange={handleChange} required/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="password">Password:</label>
-                        <input type="password" name="password" placeholder="Password" onChange={handleChange} required/>
+                        <input type="password" name="password" value={formData.password} placeholder="Password" onChange={handleChange} required/>
                     </div>
                     <div className="form-group">
-                        <label>
-                            <input type="checkbox" name="is_organizer" onChange={handleChange}/>
+                        <label htmlFor="is_organizer">
+                            <input type="checkbox" id="is_organizer" name="is_organizer" checked={formData.is_organizer} onChange={handleChange}/>
                                 Event Organizer?
                         </label>
                     </div>

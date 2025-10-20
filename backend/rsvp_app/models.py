@@ -2,6 +2,8 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 
+#Inherits from AbstractUser, which includes standard fields like
+#username and password
 class CustomUser(AbstractUser):
     is_organizer = models.BooleanField(default=False)
 

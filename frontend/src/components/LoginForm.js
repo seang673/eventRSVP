@@ -30,7 +30,7 @@ function LoginForm({ setToken }) {
 
     return (
         <div className = "auth-screen">
-            <button class="back-btn" onClick={() => navigate('/')}><b>🔙Back</b></button>
+            <button className="back-btn" onClick={() => navigate('/')}><b>🔙Back</b></button>
             <div className="contents">
                 <form onSubmit={handleLogin}>
                     <h2>Login</h2>
