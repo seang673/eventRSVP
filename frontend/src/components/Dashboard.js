@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
 import {handleLogout} from '../utils/auth';
+import '../styles/dashboard.css'
 
 const Dashboard = () => {
     const [userData, setUserData] = useState(null);
@@ -26,20 +27,25 @@ const Dashboard = () => {
         });
     }, [navigate]);
 
-    const isOrganizer =  userData.is_organizer === 'true';
+
     if (!userData) return <p>Loading dashboard...</p>
+    const isOrganizer =  userData.is_organizer === 'true';
 
     return (
-        <div>
-            <h1>Welcome, {userData.username}</h1>
-            <p>Email: {userData.email}</p>
-            <p>Your Role: {isOrganizer ? 'Organizer' : 'Attendee'}</p>
-            <p>{userData.message}</p>
-            <button onClick={() => navigate(isOrganizer ? '/create-event' : '/events')}>
-                {isOrganizer ? 'Create Event' : 'Events'}
-            </button>
-            <button onClick={() => navigate('/profile')}>Profile</button>
-            <button onClick={() => handleLogout(navigate)}>Logout</button>
+        <div className="main-body">
+                <div className="first-section">
+                    <h1>Welcome, {userData.username}</h1>
+                    <p>Email: {userData.email}</p>
+                    <p>Your Role: {isOrganizer ? 'Organizer' : 'Attendee'}</p>
+                    <p>{userData.message}</p>
+                </div>
+                <div className="second-section">
+                    <button className="btn-class" onClick={() => navigate(isOrganizer ? '/create-event' : '/events')}>
+                        {isOrganizer ? 'Create Event' : 'Events'}
+                    </button>
+                    <button className="btn-class" onClick={() => navigate(isOrganizer ? '/orgProfile' : '/attendeeProfile')}>Profile</button>
+                    <button className="btn-class" onClick={() => handleLogout(navigate)}>Logout</button>
+                </div>
         </div>
     );
 };

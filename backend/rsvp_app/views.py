@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAdminUser, IsAuthenticated, BasePermission, AllowAny
 from rest_framework.response import Response
@@ -22,8 +23,9 @@ class RegisterView(generics.CreateAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = RegisterSerializer
     authentication_classes = [SessionAuthentication]
+    permission_classes = [AllowAny]
 
-class CustomLoginView(APIView):
+class CustomLoginView(TokenObtainPairView):
     authentication_classes = [] #No auth required for login
     permission_classes = [AllowAny]  #Allow public access
 

@@ -5,7 +5,7 @@ import '../styles/authen.css';
 
 
 
-function LoginForm({ setToken }) {
+function LoginForm() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -13,18 +13,26 @@ function LoginForm({ setToken }) {
     const handleLogin = async (e) => {
         e.preventDefault();
         try{
-            const res = await axios.post('http://127.0.0.1:8000/api/login/', {
+            const res = await axios.post('http://127.0.0.1:8000/login/', {
                 username,
                 password
             });
-            setToken(res.data.access);
-            localStorage.setItem('token', res.data.access);
-            localStorage.setItem('username', res.data.username);
-            localStorage.setItem('is_organizer', res.data.is_organizer);
-            alert(`Login is successful, welcome back ${username}!`)
+            console.log("Login Response:", res.data)
+            const{access, user} = res.data;
+
+            if (!access || !user) {
+                throw new Error("Malformed response");
+            }
+
+            localStorage.setItem('token', access);
+            localStorage.setItem('username', user.username);
+            localStorage.setItem('is_organizer', user.is_organizer);
+
+            alert(`Login is successful, welcome back ${user.username}!`)
             navigate('/dashboard');
         } catch (error) {
-            alert("Login failed: " + (error.response?.data?.detail || 'Unknown error'));
+            console.error("Login error:", error.response || error);
+            alert("Login failed: " + (error.response?.data?.error || error.message || 'Unknown error'));
         }
     };
 

@@ -1,0 +1,31 @@
+.main-body{
+    display:flex;
+    justify-content:center;
+    align-items:space-between;
+    background-color:rgb(174, 144, 108);
+}
+
+.first-section,.second-section{
+    display: flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:space-between;
+    margin-bottom:20px;
+}
+
+.first-section{
+    margin-right:50px;
+}
+
+.btn-class{
+    background-color:rgb(104, 102, 102);
+    color: white;
+    padding: 10px 19px;
+    text-align:center;
+    border-radius:11px;
+    cursor:pointer;
+    transition: all 0.1s ease-in-out;
+}
+.btn-class:hover{
+    background-color:rgb(53, 52, 52);
+}

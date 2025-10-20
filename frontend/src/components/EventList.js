@@ -39,7 +39,7 @@ function EventList(){
 
     return (
         <div className="event-list">
-            <button className="back-btn"><b>🔙Back</b></button>
+            <button className="back-btn" onClick={() => navigate(-1)}><b>🔙Back</b></button>
             <div className="query-section">
                 <h2>Upcoming Events For You!</h2>
                 <input
