@@ -44,17 +44,24 @@ function RSVPForm() {
 
     return (
         <div className="form-Container">
-            <button class="back-btn">🔙Back</button>
-            <div className="formHeader">
-                <button className="back-button" onClick={() => navigate(-1)}><b>🔙Back</b></button>
-                <h2>RSVP for {selectedEvent.title}</h2>
-            </div>
+            <button class="back-btn" onClick={() => navigate(-1)}><b>🔙Back</b></button>
+
             <div className="formBody">
+                <h2>RSVP for {selectedEvent.title}</h2>
                 <form onSubmit={handleSubmit}>
                     {error && <p className="error">{error}</p>}
-                    <input type = "text" value={name} onChange={e => setName(e.target.value)} placeholder="Enter Name" required/>
-                    <input type = "email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter Email" required/>
-                    <textarea value={message} onChange={e => setMessage(e.target.value)} placeholder="Message (optional)"/>
+                    <div className="form-group">
+                        <label htmlFor="name">Name:</label>
+                        <input type = "text" id="naame" value={name} onChange={e => setName(e.target.value)} placeholder="Enter Name" required/>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="email">Email:</label>
+                        <input type = "email" id="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter Email" required/>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="message">Message:</label>
+                        <textarea value={message} id="message" onChange={e => setMessage(e.target.value)} placeholder="Message (optional)"/>
+                    </div>
                     <button type="submit">Submit RSVP</button>
                 </form>
             </div>

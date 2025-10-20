@@ -102,7 +102,7 @@ function OrganizerProfile() {
     const username = localStorage.getItem('username')
     return (
         <div className="main-body">
-            <button class="back-btn">🔙Back</button>
+            <button class="back-btn" onClick={() => navigate(-1)}>🔙Back</button>
             <button className="logout-btn" onClick={() => handleLogout(navigate)}>Logout</button>
             <div className="profile-section">
                 <h2>{username}'s Profile </h2>

@@ -30,25 +30,25 @@ function LoginForm({ setToken }) {
 
     return (
         <div className = "auth-screen">
-            <button class="back-btn">🔙Back</button>
+            <button class="back-btn" onClick={() => navigate('/')}><b>🔙Back</b></button>
             <div className="contents">
                 <form onSubmit={handleLogin}>
                     <h2>Login</h2>
                     <div className="form-group">
                         <label htmlFor="username">Email:</label>
-                        <input type="text" id="username" value={username} onChange={e => setUsername(e.target.value)} placeholder = "Enter Username" />
+                        <input type="text" id="username" value={username} onChange={e => setUsername(e.target.value)} placeholder = "Username" />
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="password">Password:</label>
-                        <input type="password" id="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Enter Password" />
+                        <input type="password" id="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" />
                     </div>
 
                     <div className="submit-section">
                         <button className="submit-btn" type="submit">Log In</button>
                     </div>
 
-                    <p>Don't have an account? <Link to="/register">Register Here</Link></p>
+                    <p>Don't have an account? <Link to="/register" style={{fontWeight: 'bold', color:'#93ced9ff'}}>Register Here</Link></p>
                 </form>
            </div>
         </div>

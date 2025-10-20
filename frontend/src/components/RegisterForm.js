@@ -40,7 +40,7 @@ const RegisterForm = () => {
 
     return (
         <div className= "auth-screen">
-            <button className="back-btn"><b>🔙Back</b></button>
+            <button className="back-btn" onClick={() => navigate('/')}><b>🔙Back</b></button>
             <div className="contents">
                 <form onSubmit = {handleSubmit}>
                     <h2>Register</h2>
@@ -69,9 +69,7 @@ const RegisterForm = () => {
 
 
                         <p>{message}</p>
-                        <p>Are you new here? <Link to="/login">Sign Up</Link></p>
-
-
+                        <p>Already have an account? <Link to="/login" style={{fontWeight: 'bold', color:'#93ced9ff'}}>Log In</Link></p>
                 </form>
             </div>
         </div>
