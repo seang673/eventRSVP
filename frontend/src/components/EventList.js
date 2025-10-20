@@ -11,20 +11,29 @@ function EventList(){
     const isOrganizer = localStorage.getItem('is_organizer') === 'true';
 
     const navigate = useNavigate();
+    const token = localStorage.getItem('token');
 
     const fetchEvents = () => {
-        api.get('/events/')
+        api.get('/events/', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+
             .then(res=> setEvents(res.data))
-            .catch(err => console.error(err));
+            .catch(err => console.error("Error fetching events", err));
     };
 
     useEffect(() => {
         fetchEvents();
     }, []);
 
-    const filteredEvents = events.filter(event =>
+    console.log("Events response:", events);
+
+    const filteredEvents = Array.isArray(events)
+    ? events.filter(event =>
         event.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    ) : [];
     const indexOfLastEvent = currentPage * eventsPerPage;
     const indexOfFirstEvent = indexOfLastEvent - eventsPerPage;
     const currentEvents = filteredEvents.slice(indexOfFirstEvent, indexOfLastEvent);
@@ -39,20 +48,22 @@ function EventList(){
 
     return (
         <div className="event-list">
-            <button className="back-btn" onClick={() => navigate(-1)}><b>🔙Back</b></button>
+            <button className="back-btn" onClick={() => navigate('/dashboard')}><b>🔙Back</b></button>
             <div className="query-section">
-                <h2>Upcoming Events For You!</h2>
-                <input
-                    type = "text"
-                    placeholder="Search events..."
-                    value = {searchTerm}
-                    onChange={e => setSearchTerm(e.target.value)}
-                />
+
+                    <h2>Upcoming Events For You!</h2>
+                    <input
+                        className="search"
+                        type = "text"
+                        placeholder="Search events..."
+                        value = {searchTerm}
+                        onChange={e => setSearchTerm(e.target.value)}
+                    />
             </div>
 
             <div className="events-section">
-                //For refreshing events
-                <button onClick={fetchEvents}>Refresh Events</button>
+                {/*For refreshing events */}
+                <button className="refresh-btn" onClick={fetchEvents}>Refresh Events</button>
                 {currentEvents.map(event => (
                     <div className="event-card" key={event.id}>
                         <h2><strong>{event.title}</strong></h2>

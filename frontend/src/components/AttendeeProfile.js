@@ -2,14 +2,21 @@ import React, {useEffect, useState} from 'react';
 import {Navigate, useNavigate} from 'react-router-dom';
 import api from '../services/api';
 import { handleLogout } from '../utils/auth';
+import '../styles/profile.css';
 
 function UserProfilePage() {
     const [rsvps, setRsvps] = useState([]);
     const [loading, setLoading] = useState(true);
-    const userEmail = localStorage.get('email');
+    const userEmail = localStorage.getItem('email');
     const token = localStorage.getItem('token');
 
     const navigate = useNavigate();
+    useEffect(() => {
+        if(token){
+            fetchRsvps();
+        }
+
+        }, []);
 
     if (!token) return <Navigate to="/unauthorized" />;
 
@@ -45,48 +52,47 @@ function UserProfilePage() {
         }
     };
 
-    useEffect(() => {
-        fetchRsvps();
-    }, []);
-
     if (loading) return <p>Loading the RSVPs...</p>
 
     const filteredRsvps = rsvps.filter(rsvp => rsvp.email === userEmail);
     const username = localStorage.getItem('username')
     return (
-        <div>
-            <button onClick={() => handleLogout(navigate)}>Logout</button>
-            <h2>{username}'s Profile' </h2>
-            <h3>Your Submitted RSVPS</h3>
-            //RSVP Table
-            <table>
-                <thead>
-                    <tr>
-                        <th>Event</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Message</th>
-                        <th>Confirmed</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    //populates table with rsvps
-                    {filteredRsvps.map(rsvp => (
-                        <tr key={rsvp.id}>
-                            <td>{rsvp.event_title || rsvp.event}</td>
-                            <td>{rsvp.name}</td>
-                            <td>{rsvp.email}</td>
-                            <td>{rsvp.message}</td>
-                            <td>✅</td>
-                            <td>
-                                <button onClick={() => handleCancel(rsvp.id)}>Cancel</button>
-                            </td>
+        <div className="main-body">
+            <button className="back-btn" onClick={() => navigate('/dashboard')}>🔙Back</button>
+            <button className="logout-btn" onClick={() => handleLogout(navigate)}>Logout</button>
+            <div className="profile-section">
+                <h2>{username}'s Profile </h2>
+                <h3>Your Event Reservations</h3>
+                {/*RSVP Table*/}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Event</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Message</th>
+                            <th>Confirmed</th>
+                            <th>Action</th>
                         </tr>
-                    ))}
-                </tbody>
+                    </thead>
+                    <tbody>
+                        {/*populates table with rsvps*/}
+                        {filteredRsvps.map(rsvp => (
+                            <tr key={rsvp.id}>
+                                <td>{rsvp.event_title || rsvp.event}</td>
+                                <td>{rsvp.name}</td>
+                                <td>{rsvp.email}</td>
+                                <td>{rsvp.message}</td>
+                                <td>✅</td>
+                                <td>
+                                    <button onClick={() => handleCancel(rsvp.id)}>Cancel</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
 
-            </table>
         </div>
     );
 }

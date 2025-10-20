@@ -34,16 +34,16 @@ const Dashboard = () => {
     return (
         <div className="main-body">
                 <div className="first-section">
-                    <h1>Welcome, {userData.username}</h1>
+                    <h1>Welcome, {userData.username}!</h1>
                     <p>Email: {userData.email}</p>
-                    <p>Your Role: {isOrganizer ? 'Organizer' : 'Attendee'}</p>
+                    <p>Your Role: <b>{isOrganizer ? 'Organizer' : 'Attendee'}</b></p>
                     <p>{userData.message}</p>
                 </div>
                 <div className="second-section">
                     <button className="btn-class" onClick={() => navigate(isOrganizer ? '/create-event' : '/events')}>
-                        {isOrganizer ? 'Create Event' : 'Events'}
+                        {isOrganizer ? 'Create Event' : 'Events For You'}
                     </button>
-                    <button className="btn-class" onClick={() => navigate(isOrganizer ? '/orgProfile' : '/attendeeProfile')}>Profile</button>
+                    <button className="btn-class" onClick={() => navigate(isOrganizer ? '/orgProfile' : '/attendeeProfile')}>User Profile</button>
                     <button className="btn-class" onClick={() => handleLogout(navigate)}>Logout</button>
                 </div>
         </div>

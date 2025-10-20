@@ -44,19 +44,42 @@
 .rsvp-button:hover{
     background-color:rgb(53, 52, 52);
 }
+.search{
+    border-radius:6px;
+    border: 1px solid #ccc;
+    padding:4px;
+    box-shadow: 0 0 5px rgba(147, 206, 217, 0.5);
+
+
+}
+
+.refresh-btn{
+    background-color:rgb(104, 102, 102);
+    color: white;
+    padding: 8px 12px;
+    text-align:center;
+    border-radius:11px;
+    cursor:pointer;
+    transition: all 0.1s ease-in-out;
+    margin-top:15px;
+}
+.refresh-btn:hover{
+    background-color:rgb(53, 52, 52);
+}
+
 
 .back-btn{
     background-color: #381889;
-  color:white;
-  border: none;
-  position:absolute;
-  top: 20px;
-  right: 20px;
-  border-radius:4px;
-  padding: 8px 12px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
+    color:white;
+    border: none;
+    position:absolute;
+    top: 20px;
+    right: 20px;
+    border-radius:4px;
+    padding: 8px 12px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
 }
 
 .back-btn:hover{

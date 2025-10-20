@@ -102,7 +102,7 @@ function OrganizerProfile() {
     const username = localStorage.getItem('username')
     return (
         <div className="main-body">
-            <button class="back-btn" onClick={() => navigate(-1)}>🔙Back</button>
+            <button class="back-btn" onClick={() => navigate('/dashboard')}>🔙Back</button>
             <button className="logout-btn" onClick={() => handleLogout(navigate)}>Logout</button>
             <div className="profile-section">
                 <h2>{username}'s Profile </h2>
@@ -150,7 +150,7 @@ function OrganizerProfile() {
                         </tr>
                     </thead>
                     <tbody>
-                        //populates table with rsvps
+                        {/*populates table with rsvps*/}
                         {rsvps.map(rsvp => (
                             <tr key={rsvp.id}>
                                 <td>{rsvp.event_title || rsvp.event}</td>

@@ -1,30 +1,37 @@
 .main-body{
     display:flex;
-    justify-content:center;
-    align-items:space-between;
-    background-color:rgb(174, 144, 108);
+    justify-content:space-between;
+    background-color:rgb(214, 151, 75);
+    height:100vh;
+
+
 }
 
-.first-section,.second-section{
+.second-section{
     display: flex;
     flex-direction:column;
-    justify-content:center;
-    align-items:space-between;
-    margin-bottom:20px;
+    justify-content:space-between;
+    align-items:center;
 }
 
 .first-section{
-    margin-right:50px;
+    display: flex;
+    flex-direction:column;
+    justify-content:space-between;
+    align-items:center;
+    margin-right:140px;
+
 }
 
 .btn-class{
     background-color:rgb(104, 102, 102);
     color: white;
-    padding: 10px 19px;
+    padding: 10px 25px;
     text-align:center;
     border-radius:11px;
     cursor:pointer;
     transition: all 0.1s ease-in-out;
+    margin-bottom:20px;
 }
 .btn-class:hover{
     background-color:rgb(53, 52, 52);
