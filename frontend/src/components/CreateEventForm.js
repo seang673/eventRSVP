@@ -83,8 +83,8 @@ const CreateEventForm = () => {
     };
 
     return (
-        <div className="formContainer">
-            <button className="back-button" onClick={() => navigate(-1)}><b>🔙Back</b></button>
+        <div className="form-Container">
+            <button className="back-btn" onClick={() => navigate(-1)}><b>🔙Back</b></button>
 
             <div className="formBody">
                 <h2>Create A New Event</h2>

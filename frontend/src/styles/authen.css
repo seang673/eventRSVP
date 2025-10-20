@@ -2,9 +2,8 @@
     background-color: rgb(63, 148, 177);
     display: flex;
     justify-content:center;  /*Horzontally center*/
-    align-items:flex-start;  /*Vertically towards the top */
-    padding-top:30px;
-    display: 100vh;
+    align-items:center;  /*Vertically towards the top */
+    height: 100vh;
 }
 
 .auth-screen{
@@ -35,7 +34,10 @@
 .submit-section{
     display:flex;
 }
-.btn-class{
+.back-btn{
+    position:absolute;
+    top:15px;
+    left:15px;
     background-color:rgb(1, 82, 139);
     color: white;
     padding: 8px 13px;
@@ -44,7 +46,7 @@
     cursor:pointer;
     transition: all 0.2s ease-in-out;
 }
-.btn-class:hover{
+.back-btn:hover{
     background-color:rgb(53, 52, 52);
 }
 

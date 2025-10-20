@@ -40,6 +40,7 @@ const RegisterForm = () => {
 
     return (
         <div className= "auth-screen">
+            <button className="back-btn"><b>🔙Back</b></button>
             <div className="contents">
                 <form onSubmit = {handleSubmit}>
                     <h2>Register</h2>

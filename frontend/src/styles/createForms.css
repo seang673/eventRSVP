@@ -4,19 +4,27 @@
     margin-top: 4px;
 }
 
-.back-button{
+.back-btn{
   background-color: #381889;
   color:white;
   border: none;
+  position:absolute;
   top: 20px;
-  right: 20px;
+  left: 20px;
   border-radius:4px;
   padding: 8px 12px;
   font-size: 16px;
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
 
-.formContainer{
+.back-btn:hover{
+    background-color:rgb(53, 52, 52);
+}
+
+.form-Container{
+  display:flex;
+  height:100vh;
   background-color:rgb(108, 160, 197);
   justify-content: center;
   align-items: center;

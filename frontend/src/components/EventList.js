@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import api from '../services/api';
+import '../styles/eventStyling.css';
 
 function EventList(){
     const [events, setEvents] = useState([]);
@@ -38,6 +39,7 @@ function EventList(){
 
     return (
         <div className="event-list">
+            <button className="back-btn"><b>🔙Back</b></button>
             <div className="query-section">
                 <h2>Upcoming Events For You!</h2>
                 <input

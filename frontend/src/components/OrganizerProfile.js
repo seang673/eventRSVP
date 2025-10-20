@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Navigate, useNavigate} from 'react-router-dom';
 import api from '../services/api';
 import { handleLogout } from '../utils/auth';
+import "../styles/profile.css";
 
 function OrganizerProfile() {
     const [rsvps, setRsvps] = useState([]);
@@ -101,34 +102,37 @@ function OrganizerProfile() {
     const username = localStorage.getItem('username')
     return (
         <div className="main-body">
-            <button onClick={() => handleLogout(navigate)}>Logout</button>
-            <h2>{username}'s Profile </h2>
-            <div className="event-table">
-                <h3>Your Created Events</h3>
-                <table>
-                    <thead>
-                        <tr>
-                        <th>Title</th>
-                        <th>Date</th>
-                        <th>Location</th>
-                        <th>Capacity</th>
-                        <th>RSVP Count</th>
-                        <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {events.map(event => (
-                        <tr key={event.id}>
-                            <td>{event.title}</td>
-                            <td>{new Date(event.date).toLocaleString()}</td>
-                            <td>{event.location}</td>
-                            <td>{event.capacity}</td>
-                            <td>{event.rsvp_count}</td>
-                            <td><button onClick={() => handleCancelEvents(event.id)}>Cancel</button></td>
-                        </tr>
-                        ))}
-                    </tbody>
-                </table>
+            <button class="back-btn">🔙Back</button>
+            <button className="logout-btn" onClick={() => handleLogout(navigate)}>Logout</button>
+            <div className="profile-section">
+                <h2>{username}'s Profile </h2>
+                <div className="event-table">
+                    <h3>Your Created Events</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                            <th>Title</th>
+                            <th>Date</th>
+                            <th>Location</th>
+                            <th>Capacity</th>
+                            <th>RSVP Count</th>
+                            <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {events.map(event => (
+                            <tr key={event.id}>
+                                <td>{event.title}</td>
+                                <td>{new Date(event.date).toLocaleString()}</td>
+                                <td>{event.location}</td>
+                                <td>{event.capacity}</td>
+                                <td>{event.rsvp_count}</td>
+                                <td><button onClick={() => handleCancelEvents(event.id)}>Cancel</button></td>
+                            </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div className="rsvp-table">

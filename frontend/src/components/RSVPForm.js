@@ -43,7 +43,8 @@ function RSVPForm() {
         };
 
     return (
-        <div className="form-container">
+        <div className="form-Container">
+            <button class="back-btn">🔙Back</button>
             <div className="formHeader">
                 <button className="back-button" onClick={() => navigate(-1)}><b>🔙Back</b></button>
                 <h2>RSVP for {selectedEvent.title}</h2>
