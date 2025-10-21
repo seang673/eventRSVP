@@ -10,4 +10,43 @@ const api = axios.create({
     }
 });
 
+// Request interceptor to attach token
+api.interceptors.request.use(config => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+// Response interceptor to handle token refresh
+api.interceptors.response.use(
+  res => res,
+  async err => {
+    const originalRequest = err.config;
+
+    if (
+      err.response?.status === 401 &&
+      !originalRequest._retry &&
+      localStorage.getItem('refresh')
+    ) {
+      originalRequest._retry = true;
+      try {
+        const refreshToken = localStorage.getItem('refresh');
+        const res = await axios.post('/api/token/refresh/', { refresh: refreshToken });
+        localStorage.setItem('token', res.data.access);
+        originalRequest.headers.Authorization = `Bearer ${res.data.access}`;
+        return api(originalRequest); // retry original request
+      } catch (refreshErr) {
+        console.error('Token refresh failed:', refreshErr);
+        // Optionally redirect to login
+      }
+    }
+
+    return Promise.reject(err);
+  }
+);
+
+
+
 export default api;

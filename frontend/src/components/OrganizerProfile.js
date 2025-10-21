@@ -98,74 +98,82 @@ function OrganizerProfile() {
     }, []);
 
     if (loading) return <p>Loading the RSVPs...</p>
+    
+
 
     const username = localStorage.getItem('username')
     return (
         <div className="main-body">
             <button class="back-btn" onClick={() => navigate('/dashboard')}>🔙Back</button>
             <button className="logout-btn" onClick={() => handleLogout(navigate)}>Logout</button>
-            <div className="profile-section">
+            <div className="heading">
                 <h2>{username}'s Profile </h2>
-                <div className="event-table">
-                    <h3>Your Created Events</h3>
+            </div>
+
+            <div className="two-tables">
+                <div className="profile-section">
+                    <div className="event-table">
+                        <h3>Your Created Events</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                <th>Event Title</th>
+                                <th>Date</th>
+                                <th>Location</th>
+                                <th>Capacity</th>
+                                <th>RSVP Count</th>
+                                <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {events.map(event => (
+                                <tr key={event.id}>
+                                    <td>{event.title}</td>
+                                    <td>{new Date(event.date).toLocaleString()}</td>
+                                    <td>{event.location}</td>
+                                    <td>{event.capacity}</td>
+                                    <td>{event.rsvp_count}</td>
+                                    <td><button onClick={() => handleCancelEvents(event.id)}>Cancel</button></td>
+                                </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div className="rsvp-table">
+                    <h3>RSVPS For Your Events</h3>
+                    {/* RSVP Table */}
                     <table>
                         <thead>
                             <tr>
-                            <th>Title</th>
-                            <th>Date</th>
-                            <th>Location</th>
-                            <th>Capacity</th>
-                            <th>RSVP Count</th>
-                            <th>Action</th>
+                                <th>Event</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Message</th>
+                                <th>Confirmed</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {events.map(event => (
-                            <tr key={event.id}>
-                                <td>{event.title}</td>
-                                <td>{new Date(event.date).toLocaleString()}</td>
-                                <td>{event.location}</td>
-                                <td>{event.capacity}</td>
-                                <td>{event.rsvp_count}</td>
-                                <td><button onClick={() => handleCancelEvents(event.id)}>Cancel</button></td>
-                            </tr>
-                            ))}
+                            {/*populates table with rsvps*/}
+                            {rsvps.map(rsvp => (
+                                <tr key={rsvp.id}>
+                                    <td>{rsvp.event_title || rsvp.event}</td>
+                                    <td>{rsvp.name}</td>
+                                    <td>{rsvp.email}</td>
+                                    <td>{rsvp.message}</td>
+                                    <td>✅</td>
+                                    <td>
+                                        <button onClick={() => handleCancelRSVPS(rsvp.id)}>Cancel</button>
+                                    </td>
+                                </tr>
+                                ))}
                         </tbody>
                     </table>
                 </div>
             </div>
-
-            <div className="rsvp-table">
-                <h3>RSVPS For Your Events</h3>
-                {/* RSVP Table */}
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Event</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Message</th>
-                            <th>Confirmed</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {/*populates table with rsvps*/}
-                        {rsvps.map(rsvp => (
-                            <tr key={rsvp.id}>
-                                <td>{rsvp.event_title || rsvp.event}</td>
-                                <td>{rsvp.name}</td>
-                                <td>{rsvp.email}</td>
-                                <td>{rsvp.message}</td>
-                                <td>✅</td>
-                                <td>
-                                    <button onClick={() => handleCancelRSVPS(rsvp.id)}>Cancel</button>
-                                </td>
-                            </tr>
-                            ))}
-                    </tbody>
-                </table>
-            </div>
+            
 
         </div>
     );

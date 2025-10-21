@@ -42,8 +42,8 @@ const CreateEventForm = () => {
             if (!title.trim()) newErrors.title = 'Title is required';
             if (!description.trim()) newErrors.description = 'Description is required';
             if (!location.trim()) newErrors.location = 'Location is required';
-            if (!capacity || isNaN(capacity) || parseInt(capacity) <= 0){
-                errors.capacity = "Capacity must be a positive number";
+            if (!capacity || isNaN(capacity) || parseInt(capacity) <= 0 || parseInt(capacity) > 1000){
+                errors.capacity = "Capacity must be a number between 1 and 20";
             }
 
             // Check for valid date
@@ -71,11 +71,11 @@ const CreateEventForm = () => {
         try{
             const res = await axios.post('http://127.0.0.1:8000/events/', payload, {
                 headers : {
-                    Authorization: `Bearer ${token}`
-                }
+                    Authorization: `Bearer ${token}`,
+                },
             });
-            setMessage("Event created successfully!");
-            setTimeout(() => navigate('/dashboard'), 2000);  //Navigate to dashboard after 2 seconds
+            alert("Message Created Successfully!")
+            navigate('/dashboard') //Navigate to dashboard after 2 seconds
         } catch(err) {
             const errorMsg = err.response?.data?.detail || 'Failed to create event';
             setMessage(errorMsg);
@@ -89,22 +89,39 @@ const CreateEventForm = () => {
             <div className="formBody">
                 <h2>Create A New Event</h2>
                 <form onSubmit={handleSubmit}>
-                    <input type="text" name="title" value={title} placeholder="Enter Title" onChange={handleChange} />
-                    {errors.title && <p className="error">{errors.title}</p>}
+                    <div className="form-group">
+                        <label htmlFor="title">Event Title:</label>
+                        <input type="text" className="input" id="title" name="title" value={title} placeholder="Title" onChange={handleChange} />
+                        {errors.title && <p className="error">{errors.title}</p>}
+                    </div>
 
-                    <input type="text" name="description" value={description} placeholder="Enter Description" onChange={handleChange} />
-                    {errors.description && <p className="error">{errors.description}</p>}
+                    <div className="form-group">
+                        <label htmlFor="date">Date:</label>
+                        <input type="date" className="input" id="date" name="date" value={date} placeholder="Enter Date" onChange={handleChange} min={new Date().toISOString().split("T")[0]}/>
+                        {errors.date && <p className="error">{errors.date}</p>}
+                    </div>
 
-                    <input type="date" name="date" value={date} placeholder="Enter Date" onChange={handleChange} />
-                    {errors.date && <p className="error">{errors.date}</p>}
+                    <div className="form-group">
+                        <label htmlFor="capacity">Capacity:</label>
+                        <input type="number" className="input" id="capacity" name="capacity" value={capacity} placeholder="Capacity (Max 20)" onChange={handleChange} min={1} max={1000}/>
+                        {errors.capacity && <p className="error">{errors.capacity}</p>}
+                    </div>
 
-                    <input type="number" name="capacity" value={capacity} placeholder="Enter Capacity" onChange={handleChange}/>
-                    {errors.capacity && <p className="error">{errors.capacity}</p>}
+                    <div className="form-group">
+                        <label htmlFor="location">Location:</label>
+                        <input type="text" className="input" id="location" name="location" value={location} placeholder="Location" onChange={handleChange} />
+                        {errors.location && <p className="error">{errors.location}</p>}
 
-                    <input type="text" name="location" value={location} placeholder="Enter Location" onChange={handleChange} />
-                    {errors.location && <p className="error">{errors.location}</p>}
+                    </div>
 
-                    <button type="submit">Create Event</button>
+                    <div className="form-group">
+                        <label htmlFor="description">Event Description:</label>
+                        <textarea className="input" id="description" name="description" value={description} placeholder="Description" onChange={handleChange} rows={4}/>
+                        {errors.description && <p className="error">{errors.description}</p>}
+                    </div>
+
+
+                    <button className="submit-btn" type="submit">Create Event</button>
                     <p>{message}</p>
                 </form>
             </div>

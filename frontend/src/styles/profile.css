@@ -1,5 +1,6 @@
 .main-body{
     display:flex;
+    flex-direction:column;
     align-items:center;
     justify-content:center;
 }
@@ -8,6 +9,19 @@
     flex-direction:column;
     align-items:center;
     justify-content:center;
+}
+.heading{
+  position:absolute;
+  top:5vh;
+  right:50vw;
+}
+.two-tables{
+  display: flex;
+  align-items: space-between;
+}
+
+.event-table{
+  margin-right:60px;
 }
 
 .back-btn{

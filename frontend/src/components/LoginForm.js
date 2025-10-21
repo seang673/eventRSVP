@@ -18,13 +18,14 @@ function LoginForm() {
                 password
             });
             console.log("Login Response:", res.data)
-            const{access, user} = res.data;
+            const{access,  refresh, user} = res.data;
 
-            if (!access || !user) {
+            if (!access || !user || !refresh) {
                 throw new Error("Malformed response");
             }
 
             localStorage.setItem('token', access);
+            localStorage.setItem('refresh', refresh);
             localStorage.setItem('username', user.username);
             localStorage.setItem('is_organizer', user.is_organizer);
 

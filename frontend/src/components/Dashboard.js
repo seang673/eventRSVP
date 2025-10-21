@@ -11,6 +11,7 @@ const Dashboard = () => {
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (!token) {
+            console.log("Token not found")
             navigate('/login'); //Redirect to login screen if user's token not found
             return;
         }
@@ -29,7 +30,7 @@ const Dashboard = () => {
 
 
     if (!userData) return <p>Loading dashboard...</p>
-    const isOrganizer =  userData.is_organizer === 'true';
+    const isOrganizer =  localStorage.getItem('is_organizer') === 'true';
 
     return (
         <div className="main-body">
