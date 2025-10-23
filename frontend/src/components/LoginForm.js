@@ -27,6 +27,7 @@ function LoginForm() {
             localStorage.setItem('token', access);
             localStorage.setItem('refresh', refresh);
             localStorage.setItem('username', user.username);
+            localStorage.setItem('email', user.email);
             localStorage.setItem('is_organizer', user.is_organizer);
 
             alert(`Login is successful, welcome back ${user.username}!`)

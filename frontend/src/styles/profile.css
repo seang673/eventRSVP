@@ -3,6 +3,9 @@
     flex-direction:column;
     align-items:center;
     justify-content:center;
+    min-height:100vh;
+    margin:0;
+    background-color:aquamarine;
 }
 .heading{
   position:absolute;
@@ -20,6 +23,16 @@
   overflow-y:auto;
   width:100%;
   min-width: 300px;
+}
+
+.delete-btn{
+    background-color:rgb(104, 102, 102);
+    color: white;
+    padding: 8px 13px;
+    text-align:center;
+    border-radius:11px;
+    cursor:pointer;
+    transition: all 0.1s ease-in-out;
 }
 
 .event-table{
@@ -63,6 +76,7 @@ thead {
   color:rgb(101, 94, 94);
 }
 
+
 @media (max-width: 768px) {
   table, thead, tbody, th, td, tr {
     display: block;
@@ -71,7 +85,13 @@ thead {
   thead {
     display: none;
   }
-
+  .two-tables{
+    padding-top:175px;
+  }
+  .main-body{
+    height:100%;
+    overflow-x: hidden;
+  }
   tr {
     margin-bottom: 1rem;
     border: 1px solid #ccc;

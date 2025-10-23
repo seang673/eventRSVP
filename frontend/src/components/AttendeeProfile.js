@@ -57,8 +57,9 @@ function UserProfilePage() {
 
     if (loading) return <p>Loading the RSVPs...</p>
 
-    const filteredRsvps = rsvps.filter(rsvp => rsvp.email === userEmail);
-
+    const filteredRsvps = rsvps.filter(rsvp => rsvp?.email?.trim()?.toLowerCase() === userEmail?.trim()?.toLowerCase());
+    console.log("Filtered Rsvps:", filteredRsvps);
+    console.log("Email:", userEmail);
     const username = localStorage.getItem('username')
     return (
         <div className="main-body">

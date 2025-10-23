@@ -115,6 +115,7 @@ class EventViewSet(viewsets.ModelViewSet):
 
     def perform_destroy(self, instance):
         try:
+            logger.debug(f"Attempting to delete event {instance.id}")
             instance.delete()
         except Exception as e:
             logger.error(f"Error deleting event {instance.id}: {e}")

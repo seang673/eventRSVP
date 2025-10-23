@@ -7,6 +7,8 @@ function EventList(){
     const [events, setEvents] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
+    const [loading, setLoading] = useState(true);
+
     const eventsPerPage = 5;
     const isOrganizer = localStorage.getItem('is_organizer') === 'true';
 
@@ -14,14 +16,16 @@ function EventList(){
     const token = localStorage.getItem('token');
 
     const fetchEvents = () => {
+        setLoading(true);
         api.get('/events/', {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         })
-
-            .then(res=> setEvents(res.data))
-            .catch(err => console.error("Error fetching events", err));
+            .then(res=> setEvents(res.data.results))
+            .then(res => console.log("Events result:", res.data))
+            .catch(err => console.error("Error fetching events", err))
+            .finally(() => setLoading(false));
     };
 
     useEffect(() => {
@@ -38,7 +42,7 @@ function EventList(){
     const indexOfFirstEvent = indexOfLastEvent - eventsPerPage;
     const currentEvents = filteredEvents.slice(indexOfFirstEvent, indexOfLastEvent);
 
-    const totalPages = Math.ceil(filteredEvents.length / eventsPerPage);
+    const totalPages = Math.max(1, Math.ceil(filteredEvents.length / eventsPerPage));
 
     //For attendees to RSVP
     const handleRSVP = (event) => {
@@ -59,30 +63,43 @@ function EventList(){
                         value = {searchTerm}
                         onChange={e => setSearchTerm(e.target.value)}
                     />
+                    <button className="search-btn" onClick={() => setCurrentPage(1)}>Search</button>
             </div>
 
             <div className="events-section">
                 {/*For refreshing events */}
                 <button className="refresh-btn" onClick={fetchEvents}>Refresh Events</button>
-                {currentEvents.map(event => (
-                    <div className="event-card" key={event.id}>
-                        <h2><strong>{event.title}</strong></h2>
-                        <p>{event.date}</p>
-                        <p>Location: {event.location}</p>
-                        <p>{event.description}</p>
-                        <p>
-                            {event.rsvp_count >= event.capacity
-                                ? "Event is full"
-                                : `${event.capacity - event.rsvp_count} spots left`
+                {currentEvents.length === 0 ? (
+                    <p>No events found</p>
+                ): (
+                    currentEvents.map(event => (
+                        <div className="event-card" key={event.id}>
+                            <h2><strong>{event.title}</strong></h2>
+                            <p>{new Date(event.date).toLocaleString('en-US', {
+                            weekday: 'short',
+                            month: 'short',
+                            day: 'numeric',
+                            hour: 'numeric',
+                            minute: 'numeric'
                             }
-                        </p>
-                        {!isOrganizer && (
-                            <button className="rsvp-button" onClick={() => handleRSVP(event)}>
-                                RSVP
-                            </button>
-                        )}
-                    </div>
-                ))}
+                            )}
+                            </p>
+                            <p>Location: {event.location}</p>
+                            <p>{event.description}</p>
+                            <p>
+                                {event.rsvp_count >= event.capacity
+                                    ? "Event is full"
+                                    : `${event.capacity - event.rsvp_count} spots left`
+                                }
+                            </p>
+                            {!isOrganizer && (
+                                <button className="rsvp-button" onClick={() => handleRSVP(event)}>
+                                    RSVP
+                                </button>
+                            )}
+                        </div>
+                    ))
+                )}
 
                 <div className="page-handling">
                     {Array.from({ length: totalPages }, (_, i) => (

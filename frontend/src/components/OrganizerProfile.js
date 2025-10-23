@@ -33,7 +33,7 @@ function OrganizerProfile() {
     const handleCancelRSVPS = async (rsvpId) => {
         try{
             const token = localStorage.getItem('token');
-            const res = await api.delete(`/rsvps/${rsvpId}`, {
+            const res = await api.delete(`/rsvps/${rsvpId}/`, {
                 headers: {
                     Authorization : `Bearer ${token}`,
                 },
@@ -53,7 +53,7 @@ function OrganizerProfile() {
 
     const fetchEvents = async() => {
         try{
-            const res = await api.get('/events/organizer', {
+            const res = await api.get('/events/organizer/', {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -71,7 +71,7 @@ function OrganizerProfile() {
     const handleCancelEvents = async (eventId) => {
         try{
             const token = localStorage.getItem('token');
-            const res = await api.delete(`events/${eventId}`, {
+            const res = await api.delete(`events/${eventId}/`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -144,7 +144,7 @@ function OrganizerProfile() {
                                     <td data-label="Location">{event.location}</td>
                                     <td data-label="Capacity">{event.capacity}</td>
                                     <td data-label="RSVP Count">{event.rsvp_count}</td>
-                                    <td><button onClick={() => handleCancelEvents(event.id)}>Cancel</button></td>
+                                    <td><button className="delete-btn" onClick={() => handleCancelEvents(event.id)}>Cancel</button></td>
                                 </tr>
                                 ))}
                             </tbody>
@@ -176,7 +176,7 @@ function OrganizerProfile() {
                                     <td data-label="Message">{rsvp.message}</td>
                                     <td>✅</td>
                                     <td>
-                                        <button onClick={() => handleCancelRSVPS(rsvp.id)}>Cancel</button>
+                                        <button className="delete-btn" onClick={() => handleCancelRSVPS(rsvp.id)}>Cancel</button>
                                     </td>
                                 </tr>
                                 ))}
