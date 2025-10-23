@@ -6,7 +6,9 @@ import '../styles/createForms.css';
 const CreateEventForm = () => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const [date, setDate] = useState('');
+    const [eventDate, setEventDate] = useState(() => 
+        new Date().toISOString().slice(0,16) // "YYYY-MM-DDTHH:MM"
+    );
     const [capacity, setCapacity] = useState('');
     const [location, setLocation] = useState('');
     const [message, setMessage] = useState('');
@@ -24,7 +26,7 @@ const CreateEventForm = () => {
                 setDescription(value);
                 break;
             case 'date':
-                setDate(value);
+                setEventDate(value);
                 break;
             case 'capacity':
                 setCapacity(value);
@@ -47,10 +49,10 @@ const CreateEventForm = () => {
             }
 
             // Check for valid date
-            if (!date) {
-                newErrors.date = 'Date is required';
-            } else if (new Date(date) < new Date()) {
-                newErrors.date = 'Date must be in the future';
+            if (!eventDate) {
+                newErrors.eventDate = 'Date is required';
+            } else if (new Date(eventDate) < new Date()) {
+                newErrors.eventDate = 'Date must be in the future';
             }
 
             return newErrors;
@@ -66,7 +68,11 @@ const CreateEventForm = () => {
             return;
         }
         const token = localStorage.getItem('token');
-        const payload= {title, date, location, capacity, description};
+        const payload= {title,
+                        date: new Date(eventDate).toISOString(),
+                        location,
+                        capacity,
+                        description};
 
         try{
             const res = await axios.post('http://127.0.0.1:8000/events/', payload, {
@@ -97,7 +103,7 @@ const CreateEventForm = () => {
 
                     <div className="form-group">
                         <label htmlFor="date">Date:</label>
-                        <input type="date" className="input" id="date" name="date" value={date} placeholder="Enter Date" onChange={handleChange} min={new Date().toISOString().split("T")[0]}/>
+                        <input type="datetime-local" className="input" id="date" name="date" value={eventDate} placeholder="Enter Date" onChange={handleChange} min={new Date().toISOString().slice(0, 16)}/>
                         {errors.date && <p className="error">{errors.date}</p>}
                     </div>
 

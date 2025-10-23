@@ -11,6 +11,19 @@ function UserProfilePage() {
     const token = localStorage.getItem('token');
 
     const navigate = useNavigate();
+
+    const fetchRsvps = async () => {
+        try{
+            const res = await api.get('/rsvps');
+            console.log("RSVPS response:", res.data);
+            setRsvps(res.data.results);
+        } catch (err) {
+            console.error('Failed to fetch RSVPs:', err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
         if(token){
             fetchRsvps();
@@ -20,16 +33,6 @@ function UserProfilePage() {
 
     if (!token) return <Navigate to="/unauthorized" />;
 
-    const fetchRsvps = async () => {
-        try{
-            const res = await api.get('/rsvps');
-            setRsvps(res.data);
-        } catch (err) {
-            console.error('Failed to fetch RSVPs:', err);
-        } finally {
-            setLoading(false);
-        }
-    };
 
     const handleCancel = async (rsvpId) => {
         try{
@@ -55,6 +58,7 @@ function UserProfilePage() {
     if (loading) return <p>Loading the RSVPs...</p>
 
     const filteredRsvps = rsvps.filter(rsvp => rsvp.email === userEmail);
+
     const username = localStorage.getItem('username')
     return (
         <div className="main-body">

@@ -15,13 +15,12 @@ router.register(r'events', EventViewSet)
 router.register(r'rsvps', RSVPViewSet)
 
 urlpatterns = [
+    path('rsvps/organizer/', OrganizerRSVPListView.as_view(), name='organizer-rsvps'),
+    path('events/organizer/', OrganizerEventListView.as_view(), name='organizer-events'),
     path('', include(router.urls)),
     path('register/', RegisterView.as_view(), name='register'),
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
     path('login/', CustomLoginView.as_view(), name='custom_login'),
-    path('rsvps/organizer/', OrganizerRSVPListView.as_view(), name='organizer-rsvps'),
-    path('events/organizer/', OrganizerEventListView.as_view(), name='organizer-events'),
-
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),

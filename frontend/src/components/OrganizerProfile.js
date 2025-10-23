@@ -21,7 +21,8 @@ function OrganizerProfile() {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            setRsvps(res.data);
+            console.log("RSVP Response: ",res.data)
+            setRsvps(res.data.results);
         } catch (err) {
             console.error('Failed to fetch organizer RSVPs:', err);
         } finally {
@@ -57,7 +58,8 @@ function OrganizerProfile() {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            setEvents(res.data);
+            console.log("Events Response:", res.data);
+            setEvents(res.data.results);
         }catch(err){
             console.log("Failed to fetch events", err);
         } finally {
@@ -104,7 +106,7 @@ function OrganizerProfile() {
     const username = localStorage.getItem('username')
     return (
         <div className="main-body">
-            <button class="back-btn" onClick={() => navigate('/dashboard')}>🔙Back</button>
+            <button className="back-btn" onClick={() => navigate('/dashboard')}>🔙Back</button>
             <button className="logout-btn" onClick={() => handleLogout(navigate)}>Logout</button>
             <div className="heading">
                 <h2>{username}'s Profile </h2>
@@ -128,11 +130,18 @@ function OrganizerProfile() {
                             <tbody>
                                 {events.map(event => (
                                 <tr key={event.id}>
-                                    <td>{event.title}</td>
-                                    <td>{new Date(event.date).toLocaleString()}</td>
-                                    <td>{event.location}</td>
-                                    <td>{event.capacity}</td>
-                                    <td>{event.rsvp_count}</td>
+                                    <td data-label="Event-Title">{event.title}</td>
+                                    <td data-label="Date">{new Date(event.date).toLocaleString('en-US', {weekday: 'short',
+                                    year: 'numeric',
+                                    month: 'short',
+                                    day: 'numeric',
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                    })
+                                    }</td>
+                                    <td data-label="Location">{event.location}</td>
+                                    <td data-label="Capacity">{event.capacity}</td>
+                                    <td data-label="RSVP Count">{event.rsvp_count}</td>
                                     <td><button onClick={() => handleCancelEvents(event.id)}>Cancel</button></td>
                                 </tr>
                                 ))}
@@ -142,7 +151,7 @@ function OrganizerProfile() {
                 </div>
 
                 <div className="rsvp-table">
-                    <h3>RSVPS For Your Events</h3>
+                    <h3>RSVPS To Your Events</h3>
                     {/* RSVP Table */}
                     <table>
                         <thead>
@@ -157,12 +166,12 @@ function OrganizerProfile() {
                         </thead>
                         <tbody>
                             {/*populates table with rsvps*/}
-                            {rsvps.map(rsvp => (
+                            {Array.isArray(rsvps) && rsvps.map(rsvp => (
                                 <tr key={rsvp.id}>
-                                    <td>{rsvp.event_title || rsvp.event}</td>
-                                    <td>{rsvp.name}</td>
-                                    <td>{rsvp.email}</td>
-                                    <td>{rsvp.message}</td>
+                                    <td data-label="Event-Title">{rsvp.event_title || rsvp.event}</td>
+                                    <td data-label="RSVP-Name">{rsvp.name}</td>
+                                    <td data-label="Email">{rsvp.email}</td>
+                                    <td data-label="Message">{rsvp.message}</td>
                                     <td>✅</td>
                                     <td>
                                         <button onClick={() => handleCancelRSVPS(rsvp.id)}>Cancel</button>

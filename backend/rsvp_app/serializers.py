@@ -24,6 +24,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 class EventSerializer(serializers.ModelSerializer):
     rsvp_count = serializers.SerializerMethodField()
     organizer = serializers.StringRelatedField()
+    date = serializers.DateTimeField(format="%Y-%m-%d %H:%M", input_formats=["%Y-%m-%dT%H:%M:%S.%fZ"])
 
     class Meta:
         model = Event
