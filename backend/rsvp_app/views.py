@@ -113,6 +113,14 @@ class EventViewSet(viewsets.ModelViewSet):
         #Organizer is auto-assigned
         serializer.save(organizer=self.request.user)
 
+    def perform_destroy(self, instance):
+        try:
+            instance.delete()
+        except Exception as e:
+            logger.error(f"Error deleting event {instance.id}: {e}")
+            raise ValidationError("Unable to delete event. It may have related RSVPs or internal constraints.")
+
+
 class RSVPViewSet(viewsets.ModelViewSet):
     queryset = RSVP.objects.all().order_by('-timestamp')
     serializer_class = RSVPSerializer
@@ -139,7 +147,12 @@ class RSVPViewSet(viewsets.ModelViewSet):
         return RSVP.objects.filter(email=user.email)
 
     def perform_destroy(self, instance):
-        instance.delete()
+        try:
+            instance.delete()
+        except Exception as e:
+            logger.error(f"Error deleting event {instance.id}: {e}")
+            raise ValidationError("Unable to delete RSVP. It may have related Events or internal constraints.")
+
 
     def perform_create(self, serializer):
         user = self.request.user

@@ -85,7 +85,9 @@ function OrganizerProfile() {
             }
 
         } catch(err) {
+            const errorMsg = err.response?.data?.detail || 'Failed to cancel event';
             console.error("Error canceling Event:", err);
+            alert(errorMsg);
         }
 
         }
