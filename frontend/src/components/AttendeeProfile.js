@@ -37,7 +37,7 @@ function UserProfilePage() {
     const handleCancel = async (rsvpId) => {
         try{
             const token = localStorage.getItem('token');
-            const res = await api.delete(`/rsvps/${rsvpId}`, {
+            const res = await api.delete(`/rsvps/${rsvpId}/`, {
                 headers: {
                     Authorization : `Bearer ${token}`,
                 },
@@ -90,7 +90,7 @@ function UserProfilePage() {
                                 <td>{rsvp.message}</td>
                                 <td>✅</td>
                                 <td>
-                                    <button onClick={() => handleCancel(rsvp.id)}>Cancel</button>
+                                    <button className="delete-btn" onClick={() => handleCancel(rsvp.id)}>Cancel</button>
                                 </td>
                             </tr>
                         ))}

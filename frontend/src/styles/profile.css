@@ -7,22 +7,26 @@
     margin:0;
     background-color:aquamarine;
 }
+
 .heading{
   position:absolute;
   top:5vh;
   right:50vw;
 }
+
 .two-tables{
   display: flex;
   gap:3rem;
   align-items: space-between;
   flex-wrap: wrap;
 }
+
 .event-table, .rsvp-table{
   overflow-x: auto;
   overflow-y:auto;
   width:100%;
   min-width: 300px;
+  margin-left:10px;
 }
 
 .delete-btn{
@@ -38,12 +42,12 @@
 .event-table{
   margin-right:90px;
 }
+
 thead th {
   position: sticky;
   top: 0;
   background-color: #f9f9f9;
 }
-
 
 .back-btn{
     background-color: #381889;
@@ -87,6 +91,8 @@ thead {
   }
   .two-tables{
     padding-top:175px;
+    overflow-x:hidden;
+    width:100%;
   }
   .main-body{
     height:100%;
@@ -100,7 +106,7 @@ thead {
 
   td {
     position: relative;
-    padding-left: 50%;
+    padding-left: 10%;
   }
 
   td::before {
@@ -114,8 +120,6 @@ thead {
     white-space: nowrap;
   }
 }
-
-
 
 .logout-btn{
     background-color: #381889;

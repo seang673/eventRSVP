@@ -29,6 +29,12 @@
   box-shadow:8px;
   background-color:rgb(13, 97, 174);
 }
+.rsvp-input{
+    border-radius:6px;
+    border: 1px solid #ccc;
+    padding:4px;
+    box-shadow: 0 0 5px rgba(147, 206, 217, 0.5);
+}
 
 .form-group{
     display: flex;

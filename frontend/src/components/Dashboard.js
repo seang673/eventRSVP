@@ -33,19 +33,19 @@ const Dashboard = () => {
     const isOrganizer =  localStorage.getItem('is_organizer') === 'true';
 
     return (
-        <div className="main-body">
+        <div className="dashboard-body">
                 <div className="first-section">
                     <h1>Welcome, {userData.username}!</h1>
-                    <p>Email: {userData.email}</p>
-                    <p>Your Role: <b>{isOrganizer ? 'Organizer' : 'Attendee'}</b></p>
-                    <p>{userData.message}</p>
+                    <h3>Email: {userData.email}</h3>
+                    <h3>Your Role: <b>{isOrganizer ? 'Organizer' : 'Attendee'}</b></h3>
+                    <h4>{userData.message}</h4>
                 </div>
                 <div className="second-section">
-                    <button className="btn-class" onClick={() => navigate(isOrganizer ? '/create-event' : '/events')}>
-                        {isOrganizer ? 'Create Event' : 'Events For You'}
+                    <button className="dsh-btn-class" onClick={() => navigate(isOrganizer ? '/create-event' : '/events')}>
+                        {isOrganizer ? 'Create An Event' : 'Events For You'}
                     </button>
-                    <button className="btn-class" onClick={() => navigate(isOrganizer ? '/orgProfile' : '/attendeeProfile')}>User Profile</button>
-                    <button className="btn-class" onClick={() => handleLogout(navigate)}>Logout</button>
+                    <button className="dsh-btn-class" onClick={() => navigate(isOrganizer ? '/orgProfile' : '/attendeeProfile')}>User Profile</button>
+                    <button className="dsh-btn-class" onClick={() => handleLogout(navigate)}>Logout</button>
                 </div>
         </div>
     );

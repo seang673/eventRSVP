@@ -53,6 +53,18 @@ textarea {
   font-size: 16px;
   resize: vertical; /* allows user to resize height */
 }
+.rsvp-submit-btn{
+    background-color:rgb(104, 102, 102);
+    color: white;
+    padding: 10px 15px;
+    text-align:center;
+    border-radius:11px;
+    cursor:pointer;
+    transition: all 0.1s ease-in-out;
+}
+.rsvp-submit-btn:hover{
+    background-color:rgb(53, 52, 52);
+}
 
 
 form {

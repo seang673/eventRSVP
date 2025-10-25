@@ -52,17 +52,17 @@ function RSVPForm() {
                     {error && <p className="error">{error}</p>}
                     <div className="form-group">
                         <label htmlFor="name">Name:</label>
-                        <input type = "text" id="naame" value={name} onChange={e => setName(e.target.value)} placeholder="Enter Name" required/>
+                        <input className="rsvp-input" type = "text" id="naame" value={name} onChange={e => setName(e.target.value)} placeholder="Enter Name" required/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="email">Email:</label>
-                        <input type = "email" id="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter Email" required/>
+                        <input className="rsvp-input" type = "email" id="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter Email" required/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="message">Message:</label>
-                        <textarea value={message} id="message" onChange={e => setMessage(e.target.value)} placeholder="Message (optional)"/>
+                        <textarea className="rsvp-input" value={message} id="message" onChange={e => setMessage(e.target.value)} placeholder="Message (optional)"/>
                     </div>
-                    <button type="submit">Submit RSVP</button>
+                    <button className="rsvp-submit-btn" type="submit">Submit RSVP</button>
                 </form>
             </div>
         </div>

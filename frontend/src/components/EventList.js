@@ -54,28 +54,31 @@ function EventList(){
         <div className="event-list">
             <button className="back-btn" onClick={() => navigate('/dashboard')}><b>🔙Back</b></button>
             <div className="query-section">
-
                     <h2>Upcoming Events For You!</h2>
-                    <input
-                        className="search"
-                        type = "text"
-                        placeholder="Search events..."
-                        value = {searchTerm}
-                        onChange={e => setSearchTerm(e.target.value)}
-                    />
-                    <button className="search-btn" onClick={() => setCurrentPage(1)}>Search</button>
+                    <div className="search">
+                        <input
+                            className="search"
+                            type = "text"
+                            placeholder="Search events..."
+                            value = {searchTerm}
+                            onChange={e => setSearchTerm(e.target.value)}
+                        />
+                        <button className="search-btn" onClick={() => setCurrentPage(1)}>Search</button>
+
+                    </div>
+                    <button className="refresh-btn" onClick={fetchEvents}>Refresh Events</button>
             </div>
 
             <div className="events-section">
+
                 {/*For refreshing events */}
-                <button className="refresh-btn" onClick={fetchEvents}>Refresh Events</button>
                 {currentEvents.length === 0 ? (
-                    <p>No events found</p>
+                    <h2>No events found</h2>
                 ): (
                     currentEvents.map(event => (
                         <div className="event-card" key={event.id}>
-                            <h2><strong>{event.title}</strong></h2>
-                            <p>{new Date(event.date).toLocaleString('en-US', {
+                            <h1><strong>{event.title}</strong></h1>
+                            <h2>{new Date(event.date).toLocaleString('en-US', {
                             weekday: 'short',
                             month: 'short',
                             day: 'numeric',
@@ -83,7 +86,7 @@ function EventList(){
                             minute: 'numeric'
                             }
                             )}
-                            </p>
+                            </h2>
                             <p>Location: {event.location}</p>
                             <p>{event.description}</p>
                             <p>

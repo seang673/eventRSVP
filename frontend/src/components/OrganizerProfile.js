@@ -102,8 +102,6 @@ function OrganizerProfile() {
     }, []);
 
     if (loading) return <p>Loading the RSVPs...</p>
-    
-
 
     const username = localStorage.getItem('username')
     return (
@@ -111,7 +109,7 @@ function OrganizerProfile() {
             <button className="back-btn" onClick={() => navigate('/dashboard')}>🔙Back</button>
             <button className="logout-btn" onClick={() => handleLogout(navigate)}>Logout</button>
             <div className="heading">
-                <h2>{username}'s Profile </h2>
+                <h2 style={{ textDecoration: 'underline' }}>{username}'s Profile </h2>
             </div>
 
             <div className="two-tables">

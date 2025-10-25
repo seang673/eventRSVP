@@ -1,8 +1,11 @@
-.main-body{
+.dashboard-body{
     display:flex;
-    justify-content:space-between;
+    flex-direction:column;
+    justify-content:center;
+    align-items: center;
     background-color:rgb(214, 151, 75);
     height:100vh;
+    gap:50px;
 }
 
 .second-section{
@@ -10,6 +13,7 @@
     flex-direction:column;
     justify-content:space-between;
     align-items:center;
+    gap:15px;
 }
 
 .first-section{
@@ -17,21 +21,21 @@
     flex-direction:column;
     justify-content:space-between;
     align-items:center;
-    margin-right:140px;
     text-align:center;
 
 }
 
-.btn-class{
+.dsh-btn-class{
     background-color:rgb(104, 102, 102);
     color: white;
-    padding: 10px 25px;
+    padding: 10px 20px;
     text-align:center;
     border-radius:11px;
     cursor:pointer;
-    transition: all 0.1s ease-in-out;
     margin-bottom:20px;
+    transition: all 0.1s ease-in-out;
 }
-.btn-class:hover{
+
+.dsh-btn-class:hover{
     background-color:rgb(53, 52, 52);
 }
