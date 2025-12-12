@@ -10,10 +10,11 @@ public class TestController {
     public String hello() {
         return "Spring Boot is running!";
     }
-}
 
-@GetMapping("/api/rsvp/sample")
-public Map<String, String> sample() {
-    return Map.of("status", "success", "message", "RSVP endpoint working");
+
+    @GetMapping("/api/rsvp/sample")
+    public Map<String, String> sample() {
+        return Map.of("status", "success", "message", "RSVP endpoint working");
+    }
 }
 
