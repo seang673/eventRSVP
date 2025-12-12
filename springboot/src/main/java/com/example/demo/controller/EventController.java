@@ -7,6 +7,7 @@ import com.example.demo.security.JwtUtil;
 import com.example.demo.service.EventService;
 import com.example.demo.service.RsvpService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.*;
@@ -44,15 +45,23 @@ public class EventController {
     }
 
     @PostMapping
-    public Event create(@Valid @RequestBody EventRequest req, @RequestHeader("Authorization") String authHeader) {
-        Long organizerId = JwtUtil.extractUserId(authHeader);
+    public Event create(HttpServletRequest request, @RequestBody EventRequest req) {
+
+        Long organizerId = (Long) request.getAttribute("userId");
+        boolean isOrganizer = (boolean) request.getAttribute("isOrganizer");
+
+
+        if (!isOrganizer) {
+            throw new RuntimeException("Only organizers can create events");
+        }
+
         return eventService.create(
-            req.getTitle(),
-            req.getDate(),
-            req.getLocation(),
-            req.getCapacity(),
-            req.getDescription(),
-            organizerId
+                req.getTitle(),
+                req.getDate(),
+                req.getLocation(),
+                req.getCapacity(),
+                req.getDescription(),
+                organizerId
         );
     }
 

@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.repository.CustomUserRepository;
+import com.example.demo.security.DjangoPasswordHasher;
 import com.example.demo.model.CustomUser;
 import org.springframework.stereotype.Service;
 
