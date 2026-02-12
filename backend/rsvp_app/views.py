@@ -145,7 +145,7 @@ class RSVPViewSet(viewsets.ModelViewSet):
             return RSVP.objects.filter(event__organizer=user)
 
         #Attendees will only see their own RSVPs
-        return RSVP.objects.filter(email=user.email)
+        return RSVP.objects.filter(user = user)
 
     def perform_destroy(self, instance):
         try:
@@ -161,7 +161,7 @@ class RSVPViewSet(viewsets.ModelViewSet):
         email = serializer.validated_data['email']
 
         #To check if user has already RSVP'd to the event
-        if RSVP.objects.filter(event=event, email=email).exists():
+        if RSVP.objects.filter(event=event, user=user).exists():
             raise ValidationError("You have already RSVP'd to this event.")
 
         #Check if the event is at capacity
@@ -170,7 +170,7 @@ class RSVPViewSet(viewsets.ModelViewSet):
             raise ValidationError("This event has reached its RSVP limit.")
 
         #save the RSVP
-        serializer.save()
+        serializer.save(user=user, email=user.email)
 
 
 

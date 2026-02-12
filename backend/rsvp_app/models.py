@@ -28,6 +28,13 @@ class Event(models.Model):
 
 class RSVP(models.Model):
     name = models.CharField(max_length=100)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name="rsvps"
+    )
     email = models.EmailField()
     message = models.TextField(blank=True)
     event = models.ForeignKey(Event, on_delete = models.CASCADE)

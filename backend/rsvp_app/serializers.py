@@ -44,6 +44,7 @@ class RSVPSerializer(serializers.ModelSerializer):
     class Meta:
         model = RSVP
         fields = '__all__'  #all fields are exposed
+        read_only_fields = ['user']
 
     def get_event_title(self, obj):
         return obj.event.title if obj.event else None
