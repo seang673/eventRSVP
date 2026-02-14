@@ -27,6 +27,6 @@ public class RsvpRequest {
     public void setName(String name) { this.name = name; }
     public void setEmail(String email) { this.email = email; }
     public void setMessage(String message) { this.message = message; }
-    public void setEventId(Long id) { this.eventId = eventId;}
+    public void setEventId(Long id) { this.eventId = id;}
 
 }
