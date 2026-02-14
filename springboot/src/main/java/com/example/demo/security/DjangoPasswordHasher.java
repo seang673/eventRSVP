@@ -24,11 +24,11 @@ public class DjangoPasswordHasher {
             byte[] hash = pbkdf2(password.toCharArray(), saltBytes, ITERATIONS, KEY_LENGTH);
 
             // Django format: algorithm$iterations$salt$hash
-            return String.format("%s$%d$%s$%s",
-                    ALGORITHM,
-                    ITERATIONS,
-                    salt,
-                    Base64.getEncoder().encodeToString(hash)
+            return "%s$%d$%s$%s".formatted(
+                ALGORITHM,
+                ITERATIONS,
+                salt,
+                Base64.getEncoder().encodeToString(hash)
             );
 
         } catch (Exception e) {
