@@ -1,8 +1,10 @@
 package com.example.demo.controller;
+import com.example.demo.dto.EventRequest;
 import com.example.demo.dto.RsvpRequest;
 import com.example.demo.model.Rsvp;
 import com.example.demo.service.RsvpService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.*;
@@ -20,10 +22,19 @@ public class RsvpController {
     }
 
     @PostMapping
-    public Rsvp create(@Valid @RequestBody RsvpRequest req) {
-        return service.create(req.getName(), req.getEmail(), req.getMessage(), req.getEventId());
+    public Rsvp create(HttpServletRequest request, @Valid @RequestBody RsvpRequest req) {
 
+        // Any authenticated user may RSVP — no organizer check
+        Long userId = (Long) request.getAttribute("userId");
+
+        return service.create(
+                req.getName(),
+                req.getEmail(),
+                req.getMessage(),
+                req.getEventId()
+        );
     }
+
 
     @GetMapping
     public List<Rsvp> getAll() {

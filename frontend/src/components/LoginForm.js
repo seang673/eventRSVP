@@ -45,7 +45,7 @@ function LoginForm() {
                 <form onSubmit={handleLogin}>
                     <h2>Login</h2>
                     <div className="form-group">
-                        <label htmlFor="username">Email:</label>
+                        <label htmlFor="username">Username:</label>
                         <input type="text" id="username" value={username} onChange={e => setUsername(e.target.value)} placeholder = "Username" />
                     </div>
 

@@ -27,10 +27,11 @@ public class JwtFilter extends OncePerRequestFilter {
         System.out.println("ServletPath = " + servletPath);
 
         // ✅ Allow public endpoints (NO TOKEN REQUIRED)
-        if (servletPath.equals("/api/auth/login") ||
-            servletPath.equals("/api/auth/register") ||
+        if (servletPath.startsWith("/api/auth/login") ||
+            servletPath.startsWith("/api/auth/register") ||
             servletPath.startsWith("/api/public")) {
 
+            System.out.println("BYPASS TRIGGERED for " + servletPath);
             filterChain.doFilter(request, response);
             return;
         }

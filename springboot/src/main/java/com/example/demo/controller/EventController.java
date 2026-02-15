@@ -44,26 +44,26 @@ public class EventController {
         return rsvpService.getByEvent(id);
     }
 
-    @PostMapping
-    public Event create(HttpServletRequest request, @RequestBody EventRequest req) {
+     @PostMapping
+        public Event create(HttpServletRequest request, @RequestBody EventRequest req) {
 
-        Long organizerId = (Long) request.getAttribute("userId");
-        boolean isOrganizer = (boolean) request.getAttribute("isOrganizer");
+            Boolean isOrganizer = (Boolean) request.getAttribute("isOrganizer");
+            Long organizerId = (Long) request.getAttribute("userId");
 
+            if (isOrganizer == null || !isOrganizer) {
+                throw new RuntimeException("Only organizers can create events");
+            }
 
-        if (!isOrganizer) {
-            throw new RuntimeException("Only organizers can create events");
+            return eventService.create(
+                    req.getTitle(),
+                    req.getDate(),
+                    req.getLocation(),
+                    req.getCapacity(),
+                    req.getDescription(),
+                    organizerId
+            );
         }
 
-        return eventService.create(
-                req.getTitle(),
-                req.getDate(),
-                req.getLocation(),
-                req.getCapacity(),
-                req.getDescription(),
-                organizerId
-        );
-    }
 
 
 
