@@ -5,10 +5,17 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+
 import java.io.IOException;
+import java.util.List;
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 
@@ -21,6 +28,8 @@ public class JwtFilter extends OncePerRequestFilter {
 
         String servletPath = request.getServletPath();
         String authHeader = request.getHeader("Authorization");
+        
+        System.out.println("AUTH HEADER = " + authHeader);
 
         System.out.println("RequestURI = " + request.getRequestURI());
         System.out.println("ContextPath = " + request.getContextPath());
@@ -44,21 +53,44 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         try {
-            String token = authHeader.replace("Bearer ", "");
 
-            Long userId = JwtUtil.extractUserId(token);
-            boolean isOrganizer = JwtUtil.extractIsOrganizer(token);
+            String token = authHeader.substring(7).trim(); // Remove "Bearer " prefix
+            System.out.println("TOKEN BEFORE PARSE = [" + token + "]");
 
-            // ✅ Attach user info to request for controllers/services
+            Claims claims = Jwts.parserBuilder()
+                .setSigningKey(JwtUtil.getSigningKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+
+            Long userId = ((Number) claims.get("userId")).longValue();
+            Boolean isOrganizer = claims.get("isOrganizer", Boolean.class);
+
             request.setAttribute("userId", userId);
             request.setAttribute("isOrganizer", isOrganizer);
 
+            UsernamePasswordAuthenticationToken authentication =
+                    new UsernamePasswordAuthenticationToken(
+                            userId,
+                            null,
+                            List.of() // empty authorities for now
+                    );
+
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            System.out.println("JWT FILTER PASSED — userId=" + userId + ", isOrganizer=" + isOrganizer);
+
             filterChain.doFilter(request, response);
 
-        } catch (Exception e) {
+        } catch (ExpiredJwtException e) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.getWriter().write("Invalid or expired token");
+            response.getWriter().write("Token expired");
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write("Invalid token");
         }
+
     }
 }
 

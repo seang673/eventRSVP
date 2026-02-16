@@ -32,6 +32,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public Map<String, String> login(@RequestBody LoginRequest req) {
+        System.out.println("LOGIN BODY = " + req.getUsername());
         CustomUser user = authService.authenticate(req.getUsername(), req.getPassword());
 
         String token = JwtUtil.generateToken(user.getId(), user.isOrganizer());

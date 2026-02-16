@@ -23,9 +23,7 @@ public class RsvpController {
 
     @PostMapping
     public Rsvp create(HttpServletRequest request, @Valid @RequestBody RsvpRequest req) {
-
-        // Any authenticated user may RSVP — no organizer check
-        Long userId = (Long) request.getAttribute("userId");
+        System.out.println("RSVP CONTROLLER HIT");
 
         return service.create(
                 req.getName(),

@@ -13,7 +13,7 @@ public class JwtUtil {
     /*Move to application.properties later */
     private static final String SECRET = "KJH87sd98sdf7sdf8sdf7sdf8sdf7sdf8";
 
-    private static SecretKey getSigningKey() {
+    public static SecretKey getSigningKey() {
         return Keys.hmacShaKeyFor(SECRET.getBytes());
     }
 
