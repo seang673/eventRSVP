@@ -22,7 +22,7 @@ public class CustomUser {
     @Column(name = "last_login")
     private LocalDateTime lastLogin;
 
-    private boolean isSuperuser;
+    private Boolean isSuperuser;
 
     @Column(name = "username")
     private String username;
@@ -30,13 +30,13 @@ public class CustomUser {
     private String firstName;
     private String lastName;
     private String email;
-    private boolean isStaff;
-    private boolean isActive;
+    private Boolean isStaff;
+    private Boolean isActive;
 
     @Column(name = "date_joined")
     private LocalDateTime dateJoined;
 
-    private boolean isOrganizer;
+    private Boolean isOrganizer;
 
     // getters and setters...
     public Long getId() {
@@ -63,7 +63,7 @@ public class CustomUser {
         this.lastLogin = lastLogin;
     }
 
-    public boolean isSuperuser() {
+    public Boolean isSuperuser() {
         return isSuperuser;
     }
 
@@ -103,7 +103,7 @@ public class CustomUser {
         this.email = email;
     }
 
-    public boolean isStaff() {
+    public Boolean isStaff() {
         return isStaff;
     }
 
@@ -111,7 +111,7 @@ public class CustomUser {
         isStaff = staff;
     }
 
-    public boolean isActive() {
+    public Boolean isActive() {
         return isActive;
     }
 
@@ -127,7 +127,7 @@ public class CustomUser {
         this.dateJoined = dateJoined;
     }
 
-    public boolean isOrganizer() {
+    public Boolean isOrganizer() {
         return isOrganizer;
     }
 

@@ -17,10 +17,10 @@ public class EventRequest {
 
     @NotBlank(message = "Location is required")
     private String location;
-    
+
     @Min(value = 1, message = "Capacity must be at least 1")
     private int capacity;
-    
+
     @NotBlank(message = "Description is required")
     private String description;
 

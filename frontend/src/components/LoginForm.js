@@ -18,19 +18,15 @@ function LoginForm() {
                 password
             });
             console.log("Login Response:", res.data)
-            const{access,  refresh, user} = res.data;
+            const{token} = res.data;
 
-            if (!access || !user || !refresh) {
+            if (!token) {
                 throw new Error("Malformed response");
             }
 
-            localStorage.setItem('token', access);
-            localStorage.setItem('refresh', refresh);
-            localStorage.setItem('username', user.username);
-            localStorage.setItem('email', user.email);
-            localStorage.setItem('is_organizer', user.is_organizer);
+            localStorage.setItem('token', token);
 
-            alert(`Login is successful, welcome back ${user.username}!`)
+            alert(`Login is successful, welcome back!`)
             navigate('/dashboard');
         } catch (error) {
             console.error("Login error:", error.response || error);
