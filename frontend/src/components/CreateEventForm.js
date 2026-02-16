@@ -75,7 +75,7 @@ const CreateEventForm = () => {
                         description};
 
         try{
-            const res = await axios.post('http://127.0.0.1:8000/events/', payload, {
+            const res = await axios.post('http://localhost:8080/api/events', payload, {
                 headers : {
                     Authorization: `Bearer ${token}`,
                 },

@@ -28,7 +28,7 @@ const RegisterForm = () => {
     const handleSubmit = async(e) => {
         e.preventDefault();
         try{
-            const response = await axios.post('http://127.0.0.1:8000/register/', formData);
+            const response = await axios.post('http://localhost:8080/api/auth/register', formData);
             if (response.status === 201) {
                 alert('Registration Successful');
                 navigate('/login');

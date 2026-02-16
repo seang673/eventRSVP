@@ -22,7 +22,7 @@ function RSVPForm() {
         }
         try{
             const token = localStorage.getItem('token');
-            const res = await api.post('/rsvps/', {
+            const res = await api.post('/rsvp/', {
                 name,
                 email,
                 message,

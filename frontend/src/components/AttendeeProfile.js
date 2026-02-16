@@ -14,7 +14,7 @@ function UserProfilePage() {
 
     const fetchRsvps = async () => {
         try{
-            const res = await api.get('/rsvps');
+            const res = await api.get('/profile/attendee');
             console.log("RSVPS response:", res.data);
             setRsvps(res.data.results);
         } catch (err) {
