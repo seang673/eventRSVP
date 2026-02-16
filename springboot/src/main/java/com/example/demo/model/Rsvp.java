@@ -13,6 +13,7 @@ public class Rsvp {
     private String name;
     private String email;
     private String message; // attendee message
+    private Long userId;
 
     @Column(name = "event_id")
     private Long eventId;
@@ -36,7 +37,8 @@ public class Rsvp {
     public String getName() { return name; }
     public String getEmail() { return email; }
     public String getMessage() { return message; }
-    public Long geteventId() { return eventId; }
+    public Long getEventId() { return eventId; }
+    public Long getUserId() { return userId; }
     public LocalDateTime getTimeStamp() { return timestamp; }
 
 

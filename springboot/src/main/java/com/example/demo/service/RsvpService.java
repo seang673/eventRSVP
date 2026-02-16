@@ -26,6 +26,22 @@ public class RsvpService {
 
     }
 
+     public Rsvp getById(Long id) {
+        return repo.findById(id).orElse(null);
+    }
+
+    public void delete(Long id) {
+        repo.deleteById(id);
+    }
+
+    public void deleteByEventId(Long eventId) {   //Deleting all RSVPS for an event when the event is deleted
+        repo.deleteByEventId(eventId);
+    }
+
+
+
+
+
     public List<Rsvp> getAll() {
         return repo.findAll();
     }

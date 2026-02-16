@@ -14,15 +14,17 @@ function OrganizerProfile() {
 
     const navigate = useNavigate();
 
-    const fetchRsvps = async () => {
+    const fetchData = async () => {
         try{
-            const res = await api.get('/rsvps/organizer/', {
+            const res = await api.get('/profile/organizer/', {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            console.log("RSVP Response: ",res.data)
-            setRsvps(res.data.results);
+            console.log("RSVP Response: ",res.data.rsvps);
+            console.log("Events Response: ", res.data.events);
+            setRsvps(res.data.rsvps);
+            setEvents(res.data.events);
         } catch (err) {
             console.error('Failed to fetch organizer RSVPs:', err);
         } finally {
@@ -50,23 +52,6 @@ function OrganizerProfile() {
             console.error("Error canceling this RSVP:", err);
         }
     };
-
-    const fetchEvents = async() => {
-        try{
-            const res = await api.get('/events/organizer/', {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            console.log("Events Response:", res.data);
-            setEvents(res.data.results);
-        }catch(err){
-            console.log("Failed to fetch events", err);
-        } finally {
-            setLoading(false);
-        }
-
-    }
 
     const handleCancelEvents = async (eventId) => {
         try{
@@ -97,11 +82,10 @@ function OrganizerProfile() {
             navigate('/unauthorized');
             return;
         }
-        fetchRsvps();
-        fetchEvents();
+        fetchData();
     }, []);
 
-    if (loading) return <p>Loading the RSVPs...</p>
+    if (loading) return <p>Loading the RSVPS and Events...</p>
 
     const username = localStorage.getItem('username')
     return (
@@ -182,7 +166,7 @@ function OrganizerProfile() {
                     </table>
                 </div>
             </div>
-            
+
 
         </div>
     );

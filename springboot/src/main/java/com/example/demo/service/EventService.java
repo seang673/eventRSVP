@@ -24,6 +24,10 @@ public class EventService {
         return repo.findById(id).orElse(null);
     }
 
+    public void delete(Long id) {
+        repo.deleteById(id);
+    }
+
     public Event create(String title, LocalDate date, String location, int capacity, String description, Long organizerId) {
         Event event = new Event();
         event.setTitle(title);

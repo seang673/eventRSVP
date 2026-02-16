@@ -10,6 +10,8 @@ import com.example.demo.service.RsvpService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,25 +46,58 @@ public class EventController {
         return rsvpService.getByEvent(id);
     }
 
-     @PostMapping
-        public Event create(HttpServletRequest request, @RequestBody EventRequest req) {
+    @PostMapping
+    public Event create(HttpServletRequest request, @RequestBody EventRequest req) {
 
-            Boolean isOrganizer = (Boolean) request.getAttribute("isOrganizer");
-            Long organizerId = (Long) request.getAttribute("userId");
+        Boolean isOrganizer = (Boolean) request.getAttribute("isOrganizer");
+        Long organizerId = (Long) request.getAttribute("userId");
 
-            if (isOrganizer == null || !isOrganizer) {
-                throw new RuntimeException("Only organizers can create events");
-            }
-
-            return eventService.create(
-                    req.getTitle(),
-                    req.getDate(),
-                    req.getLocation(),
-                    req.getCapacity(),
-                    req.getDescription(),
-                    organizerId
-            );
+        if (isOrganizer == null || !isOrganizer) {
+            throw new RuntimeException("Only organizers can create events");
         }
+
+        return eventService.create(
+                req.getTitle(),
+                req.getDate(),
+                req.getLocation(),
+                req.getCapacity(),
+                req.getDescription(),
+                organizerId
+        );
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteEvent(@PathVariable Long id, HttpServletRequest request)
+    {
+        Long userId = (Long) request.getAttribute("userId");
+        Boolean isOrganizer = (Boolean) request.getAttribute("isOrganizer");
+
+        // Only organizers can delete events
+        if (!isOrganizer) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body("Only organizers can delete events");
+        }
+
+        Event event = eventService.getById(id);
+        if (event == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Event not found");
+        }
+
+        // Organizer can only delete their own events
+        if (!event.getOrganizerId().equals(userId)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body("You can only delete your own events");
+        }
+
+        // Delete RSVPs first (if cascade is not enabled)
+        rsvpService.deleteByEventId(id);
+
+        // Delete the event
+        eventService.delete(id);
+
+        return ResponseEntity.noContent().build();
+    }
 
 
 

@@ -16,7 +16,7 @@ const Dashboard = () => {
             return;
         }
 
-        axios.get('http://127.0.0.1:8000/dashboard/', {
+        axios.get('http://localhost:8080/api/dashboard', {
             headers: {
                 Authorization: `Bearer ${token}`
             }

@@ -48,7 +48,7 @@ public class ProfileController {
         // Attendees only — organizers shouldn't hit this
         if (isOrganizer) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                    .body("Organizers should use /profile/organizer");
+                    .body("This profile is for attendees");
         }
 
         List<RSVP> rsvps = rsvpRepository.findByUserId(userId);

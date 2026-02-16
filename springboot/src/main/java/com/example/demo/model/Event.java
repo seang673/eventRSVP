@@ -40,7 +40,7 @@ public class Event {
     public String getLocation() { return location; }
     public int getCapacity() { return capacity; }
     public String getDescription() { return description;}
-    public long getOrganizerId() { return organizerId; }
+    public Long getOrganizerId() { return organizerId; }
 
 
     public void setId(Long id) { this.id = id; }

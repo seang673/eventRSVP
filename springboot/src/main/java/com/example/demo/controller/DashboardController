@@ -1,0 +1,25 @@
+@RestController
+@RequestMapping("/api/dashboard")
+public class DashboardController {
+
+    private final UserService userService;
+
+    public DashboardController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @GetMapping
+    public ResponseEntity<?> getDashboard(HttpServletRequest request) {
+        Long userId = (Long) request.getAttribute("userId");
+        Boolean isOrganizer = (Boolean) request.getAttribute("isOrganizer");
+
+        CustomUser user = userService.getById(userId);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("username", user.getUsername());
+        response.put("email", user.getEmail());
+        response.put("isOrganizer", isOrganizer);
+
+        return ResponseEntity.ok(response);
+    }
+}

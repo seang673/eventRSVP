@@ -7,5 +7,9 @@ import java.util.List;
 public interface RsvpRepository extends JpaRepository<Rsvp, Long> {
     List<Rsvp> findByUserId(Long userId);
     List<Rsvp> findByEventId(Long eventId);
+    void deleteById(Long id);
+    void deleteByEventId(Long eventId);
+
+
 }
 
