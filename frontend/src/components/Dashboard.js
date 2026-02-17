@@ -11,40 +11,45 @@ const Dashboard = () => {
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (!token) {
-            console.log("Token not found")
+            console.log("User token not found")
             navigate('/login'); //Redirect to login screen if user's token not found
             return;
         }
-
         axios.get('http://localhost:8080/api/dashboard', {
             headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
-        .then(res => setUserData(res.data))
-        .catch(err => {
-            console.error(err);
+                Authorization: `Bearer ${token}`,
+            },
+        }).then(res => {
+            console.log("Dashboard Response: ", res.data);
+            setUserData(res.data);
+            localStorage.setItem('username', res.data.username);
+            localStorage.setItem('email', res.data.email);
+            localStorage.setItem('is_organizer', res.data.isOrganizer);
+        }).catch(err => {
+            setTimeout(function() {
+            console.error("Failed to fetch dashboard data:", err);
             navigate('/login');
+            }, 2000);
         });
     }, [navigate]);
 
 
     if (!userData) return <p>Loading dashboard...</p>
-    const isOrganizer =  localStorage.getItem('is_organizer') === 'true';
+
 
     return (
         <div className="dashboard-body">
                 <div className="first-section">
                     <h1>Welcome, {userData.username}!</h1>
                     <h3>Email: {userData.email}</h3>
-                    <h3>Your Role: <b>{isOrganizer ? 'Organizer' : 'Attendee'}</b></h3>
+                    <h3>Your Role: <b>{userData.isOrganizer ? 'Organizer' : 'Attendee'}</b></h3>
                     <h4>{userData.message}</h4>
                 </div>
                 <div className="second-section">
-                    <button className="dsh-btn-class" onClick={() => navigate(isOrganizer ? '/create-event' : '/events')}>
-                        {isOrganizer ? 'Create An Event' : 'Events For You'}
+                    <button className="dsh-btn-class" onClick={() => navigate(userData.isOrganizer ? '/create-event' : '/events')}>
+                        {userData.isOrganizer ? 'Create An Event' : 'Events For You'}
                     </button>
-                    <button className="dsh-btn-class" onClick={() => navigate(isOrganizer ? '/orgProfile' : '/attendeeProfile')}>User Profile</button>
+                    <button className="dsh-btn-class" onClick={() => navigate(userData.isOrganizer ? '/orgProfile' : '/attendeeProfile')}>User Profile</button>
                     <button className="dsh-btn-class" onClick={() => handleLogout(navigate)}>Logout</button>
                 </div>
         </div>

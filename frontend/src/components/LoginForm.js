@@ -25,7 +25,6 @@ function LoginForm() {
             }
 
             localStorage.setItem('token', token);
-
             alert(`Login is successful, welcome back!`)
             navigate('/dashboard');
         } catch (error) {
