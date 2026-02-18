@@ -16,7 +16,7 @@ function OrganizerProfile() {
 
     const fetchData = async () => {
         try{
-            const res = await api.get('/profile/organizer/', {
+            const res = await api.get('/profile/organizer', {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

@@ -17,7 +17,7 @@ function EventList(){
 
     const fetchEvents = () => {
         setLoading(true);
-        api.get('/events/', {
+        api.get('/events', {
             headers: {
                 Authorization: `Bearer ${token}`
             }

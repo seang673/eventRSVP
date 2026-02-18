@@ -15,12 +15,13 @@ public class RsvpService {
         this.repo = repo;
     }
 
-    public Rsvp create(String name, String email, String message, Long eventId) {
+    public Rsvp create(String name, String email, String message, Long userId, Long eventId) {
         Rsvp r = new Rsvp();
         r.setName(name);
         r.setEmail(email);
         r.setMessage(message);
         r.setEventId(eventId);
+        r.setUserId(userId);
         r.setTimestamp(LocalDateTime.now());
         return repo.save(r);
 

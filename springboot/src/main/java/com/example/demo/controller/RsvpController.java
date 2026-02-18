@@ -30,12 +30,15 @@ public class RsvpController {
     @PostMapping
     public Rsvp create(HttpServletRequest request, @Valid @RequestBody RsvpRequest req) {
         System.out.println("RSVP CONTROLLER HIT");
+        Long userId = (Long) request.getAttribute("userId");
+
 
         return rsvpService.create(
                 req.getName(),
                 req.getEmail(),
                 req.getMessage(),
-                req.getEventId()
+                req.getEventId(),
+                userId
         );
     }
 

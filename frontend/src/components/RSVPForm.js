@@ -22,11 +22,11 @@ function RSVPForm() {
         }
         try{
             const token = localStorage.getItem('token');
-            const res = await api.post('/rsvp/', {
+            const res = await api.post('/rsvp', {
                 name,
                 email,
                 message,
-                event: selectedEvent.id,
+                eventId: selectedEvent.id,
             }, {
             headers: {
                 Authorization: `Bearer ${token}`},
