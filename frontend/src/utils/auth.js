@@ -1,7 +1,7 @@
 export const handleLogout = (navigate) => {
     try{
         localStorage.removeItem('token');
-        localStorage.removeItem('is_organizer');
+        localStorage.removeItem('isOrganizer');
         alert('Logged out succesfully');
         navigate('/login');
     } catch (err){

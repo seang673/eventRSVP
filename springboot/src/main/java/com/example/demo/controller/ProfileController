@@ -1,3 +1,6 @@
+package com.example.demo.controller;
+
+
 @RestController
 @RequestMapping("/api/profile")
 public class ProfileController {
@@ -29,7 +32,7 @@ public class ProfileController {
                 .map(Event::getId)
                 .toList();
 
-        List<RSVP> rsvps = rsvpRepository.findByEventIdIn(eventIds);
+        List<Rsvp> rsvps = rsvpRepository.findByEventIdIn(eventIds);
 
         Map<String, Object> response = new HashMap<>();
         response.put("events", events);
@@ -41,7 +44,7 @@ public class ProfileController {
 
     @GetMapping("/attendee")
     public ResponseEntity<?> getAttendeeProfile(HttpServletRequest request) {
-
+        System.out.println("ATTENDEE PROFILE HIT");
         Boolean isOrganizer = (Boolean) request.getAttribute("isOrganizer");
         Long userId = (Long) request.getAttribute("userId");
 
@@ -51,7 +54,7 @@ public class ProfileController {
                     .body("This profile is for attendees");
         }
 
-        List<RSVP> rsvps = rsvpRepository.findByUserId(userId);
+        List<Rsvp> rsvps = rsvpRepository.findByUserId(userId);
 
         return ResponseEntity.ok(rsvps);
     }

@@ -24,11 +24,12 @@ public class Rsvp {
 
     public Rsvp() {}
 
-    public Rsvp(String name, String email, String status, String message, long eventId, LocalDateTime timestamp) {
+    public Rsvp(String name, String email, String status, String message, long eventId, long userId, LocalDateTime timestamp) {
         this.name = name;
         this.email = email;
         this.message = message;
         this.eventId = eventId;
+        this.userId = userId;
         this.timestamp = timestamp;
     }
 
@@ -48,6 +49,7 @@ public class Rsvp {
     public void setMessage(String message) { this.message = message; }
     public void setEventId(Long eventId) { this.eventId = eventId; }
     public void setTimestamp(LocalDateTime timestamp) { this.timestamp = timestamp; }
+    public void setUserId(Long userId) { this.userId = userId; }
 
 
 

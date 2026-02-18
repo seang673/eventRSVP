@@ -19,6 +19,8 @@ import com.example.demo.security.JwtUtil;
 import com.example.demo.service.AuthService;
 import com.example.demo.service.UserService;
 
+import tools.jackson.databind.ObjectMapper;
+
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -34,7 +36,10 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterDTO dto) {
+    public ResponseEntity<?> register(@RequestBody Map<String, Object> raw) {
+        System.out.println("RAW JSON RECEIVED = " + raw);
+        RegisterDTO dto = new ObjectMapper().convertValue(raw, RegisterDTO.class);
+        System.out.println("DTO → isOrganizer = " + dto.isOrganizer());
         authService.register(dto);
         return ResponseEntity.ok("User registered successfully");
     }

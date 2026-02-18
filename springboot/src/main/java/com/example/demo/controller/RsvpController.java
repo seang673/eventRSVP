@@ -37,8 +37,8 @@ public class RsvpController {
                 req.getName(),
                 req.getEmail(),
                 req.getMessage(),
-                req.getEventId(),
-                userId
+                userId,
+                req.getEventId()
         );
     }
 

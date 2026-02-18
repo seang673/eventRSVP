@@ -9,20 +9,20 @@ const RegisterForm = () => {
         username: '',
         email: '',
         password: '',
-        is_organizer: false,
+        organizer: false,
     });
 
     const [message, setMessage] = useState('');
 
     const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        setFormData({
-            ...formData,  //spreads existing state to not lose them
-            //if input field is checkbox, then use 'checked', else use its value
-            [name]: type === 'checkbox' ? checked : value,
-
-        });
+        const { name, type, checked, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: type === "checkbox" ? checked : value
+        }));
     };
+
+
     const navigate = useNavigate();
 
     const handleSubmit = async(e) => {
@@ -30,6 +30,7 @@ const RegisterForm = () => {
         try{
             const response = await axios.post('http://localhost:8080/api/auth/register', formData);
             if (response.status === 201) {
+                console.log("Submiting:", formData);
                 alert('Registration Successful');
                 navigate('/login');
             }
@@ -57,8 +58,8 @@ const RegisterForm = () => {
                         <input type="password" name="password" value={formData.password} placeholder="Password" onChange={handleChange} required/>
                     </div>
                     <div className="form-group">
-                        <label htmlFor="is_organizer">
-                            <input type="checkbox" id="is_organizer" name="is_organizer" checked={formData.is_organizer} onChange={handleChange}/>
+                        <label htmlFor="isOrganizer">
+                            <input type="checkbox" id="isOrganizer" name="organizer" checked={formData.organizer} onChange={handleChange}/>
                                 Event Organizer?
                         </label>
                     </div>

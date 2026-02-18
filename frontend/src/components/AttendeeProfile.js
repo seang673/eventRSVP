@@ -16,7 +16,7 @@ function UserProfilePage() {
         try{
             const res = await api.get('/profile/attendee');
             console.log("RSVPS response:", res.data);
-            setRsvps(res.data.results);
+            setRsvps(res.data);
         } catch (err) {
             console.error('Failed to fetch RSVPs:', err);
         } finally {
