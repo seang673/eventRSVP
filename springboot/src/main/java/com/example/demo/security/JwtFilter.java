@@ -16,6 +16,7 @@ import io.jsonwebtoken.Jwts;
 
 import java.io.IOException;
 import java.util.List;
+
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 
@@ -29,24 +30,27 @@ public class JwtFilter extends OncePerRequestFilter {
         String servletPath = request.getServletPath();
         String authHeader = request.getHeader("Authorization");
 
+        System.out.println("FILTER HIT: " + servletPath);
         System.out.println("AUTH HEADER = " + authHeader);
-        System.out.println("FILTER HIT: " + request.getRequestURI());
 
-        System.out.println("RequestURI = " + request.getRequestURI());
-        System.out.println("ContextPath = " + request.getContextPath());
-        System.out.println("ServletPath = " + servletPath);
-
-        // ✅ Allow public endpoints (NO TOKEN REQUIRED)
-        if (servletPath.startsWith("/api/auth/login") ||
-            servletPath.startsWith("/api/auth/register") ||
-            servletPath.startsWith("/api/public")) {
-
-            System.out.println("BYPASS TRIGGERED for " + servletPath);
+        // ✅ 1. Allow OPTIONS preflight requests
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            System.out.println("BYPASS OPTIONS");
             filterChain.doFilter(request, response);
             return;
         }
 
-        // ✅ All other endpoints require a Bearer token
+        // ✅ 2. Allow public endpoints (login, register, public)
+        if (servletPath.startsWith("/api/auth/login") ||
+            servletPath.startsWith("/api/auth/register") ||
+            servletPath.startsWith("/api/public")) {
+
+            System.out.println("BYPASS PUBLIC ENDPOINT: " + servletPath);
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        // ❗ All other endpoints require a Bearer token
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write("Missing or invalid Authorization header");
@@ -54,15 +58,14 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         try {
-
-            String token = authHeader.substring(7).trim(); // Remove "Bearer " prefix
+            String token = authHeader.substring(7).trim();
             System.out.println("TOKEN BEFORE PARSE = [" + token + "]");
 
             Claims claims = Jwts.parserBuilder()
-                .setSigningKey(JwtUtil.getSigningKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+                    .setSigningKey(JwtUtil.getSigningKey())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
 
             Long userId = ((Number) claims.get("userId")).longValue();
             Boolean isOrganizer = claims.get("isOrganizer", Boolean.class);
@@ -74,7 +77,7 @@ public class JwtFilter extends OncePerRequestFilter {
                     new UsernamePasswordAuthenticationToken(
                             userId,
                             null,
-                            List.of() // empty authorities for now
+                            List.of() // no roles for now
                     );
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -91,7 +94,5 @@ public class JwtFilter extends OncePerRequestFilter {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write("Invalid token");
         }
-
     }
 }
-

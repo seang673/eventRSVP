@@ -36,7 +36,9 @@ public class CustomUser {
     @Column(name = "date_joined")
     private LocalDateTime dateJoined;
 
-    private Boolean isOrganizer;
+
+    @Column(name = "is_organizer")
+    private boolean isOrganizer;
 
     // getters and setters...
     public Long getId() {
@@ -127,12 +129,12 @@ public class CustomUser {
         this.dateJoined = dateJoined;
     }
 
-    public Boolean isOrganizer() {
+    public boolean isOrganizer() {
         return isOrganizer;
     }
 
     public void setOrganizer(boolean organizer) {
-        isOrganizer = organizer;
+        this.isOrganizer = organizer;
     }
 }
 

@@ -11,7 +11,7 @@ const Dashboard = () => {
     useEffect(() => {
         const username = localStorage.getItem("username");
         const email = localStorage.getItem("email");
-        const isOrganizer = localStorage.getItem("is_organizer");
+        const isOrganizer = localStorage.getItem("isOrganizer") === "true";
 
         if (!username) {
             navigate("/login");

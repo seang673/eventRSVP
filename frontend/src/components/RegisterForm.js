@@ -34,7 +34,7 @@ const RegisterForm = () => {
                 navigate('/login');
             }
         } catch (error) {
-            alert('Registration failed: ' + error.response?.data?.detail || 'Unknown error');
+            alert('Registration failed: ' + error.response?.data || 'Unknown error');
         }
     };
 

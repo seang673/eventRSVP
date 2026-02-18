@@ -22,10 +22,12 @@ function EventList(){
                 Authorization: `Bearer ${token}`
             }
         })
-            .then(res=> setEvents(res.data.results))
-            .then(res => console.log("Events result:", res.data))
-            .catch(err => console.error("Error fetching events", err))
-            .finally(() => setLoading(false));
+        .then(res => {
+            console.log("Events result:", res.data);
+            setEvents(res.data); 
+        })
+        .catch(err => console.error("Error fetching events", err))
+        .finally(() => setLoading(false));
     };
 
     useEffect(() => {

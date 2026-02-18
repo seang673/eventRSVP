@@ -19,7 +19,7 @@ public class RegisterDTO {
     private String password;
 
 
-    private Boolean isOrganizer;
+    private boolean isOrganizer;
 
     // getters and setters
     public RegisterDTO() {
