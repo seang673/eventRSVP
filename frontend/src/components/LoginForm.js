@@ -3,8 +3,6 @@ import {useNavigate, Link} from 'react-router-dom';
 import axios from 'axios';  //API Calls
 import '../styles/authen.css';
 
-
-
 function LoginForm() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -17,19 +15,20 @@ function LoginForm() {
                 username,
                 password
             });
-            console.log("Login Response:", res.data)
-            const{token} = res.data;
 
-            if (!token) {
-                throw new Error("Malformed response");
-            }
+            const { token, username:returnedUsername, email, isOrganizer, id } = res.data;
 
-            localStorage.setItem('token', token);
+            localStorage.setItem("token", token);
+            localStorage.setItem("username", returnedUsername);
+            localStorage.setItem("email", email);
+            localStorage.setItem("is_organizer", isOrganizer);
+            localStorage.setItem("user_id", id);
+
             alert(`Login is successful, welcome back!`)
             navigate('/dashboard');
         } catch (error) {
             console.error("Login error:", error.response || error);
-            alert("Login failed: " + (error.response?.data?.error || error.message || 'Unknown error'));
+            alert("Login failed: " + (error.response?.data || error.message || 'Unknown error'));
         }
     };
 

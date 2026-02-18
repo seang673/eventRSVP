@@ -9,27 +9,19 @@ const Dashboard = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            console.log("User token not found")
-            navigate('/login'); //Redirect to login screen if user's token not found
+        const username = localStorage.getItem("username");
+        const email = localStorage.getItem("email");
+        const isOrganizer = localStorage.getItem("is_organizer");
+
+        if (!username) {
+            navigate("/login");
             return;
         }
-        axios.get('http://localhost:8080/api/dashboard', {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        }).then(res => {
-            console.log("Dashboard Response: ", res.data);
-            setUserData(res.data);
-            localStorage.setItem('username', res.data.username);
-            localStorage.setItem('email', res.data.email);
-            localStorage.setItem('is_organizer', res.data.isOrganizer);
-        }).catch(err => {
-            setTimeout(function() {
-            console.error("Failed to fetch dashboard data:", err);
-            navigate('/login');
-            }, 2000);
+
+        setUserData({
+            username,
+            email,
+            isOrganizer
         });
     }, [navigate]);
 

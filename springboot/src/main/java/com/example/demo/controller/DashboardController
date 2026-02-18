@@ -10,6 +10,7 @@ public class DashboardController {
 
     @GetMapping
     public ResponseEntity<?> getDashboard(HttpServletRequest request) {
+        System.out.println("DASHBOARD CONTROLLER HIT");
         Long userId = (Long) request.getAttribute("userId");
         Boolean isOrganizer = (Boolean) request.getAttribute("isOrganizer");
 
