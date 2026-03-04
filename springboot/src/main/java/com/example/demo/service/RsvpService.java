@@ -35,13 +35,13 @@ public class RsvpService {
         repo.deleteById(id);
     }
 
+    public int countRsvpsForEvent(Long eventId) {
+        return repo.countByEventId(eventId);
+    }
+
     public void deleteByEventId(Long eventId) {   //Deleting all RSVPS for an event when the event is deleted
         repo.deleteByEventId(eventId);
     }
-
-
-
-
 
     public List<Rsvp> getAll() {
         return repo.findAll();

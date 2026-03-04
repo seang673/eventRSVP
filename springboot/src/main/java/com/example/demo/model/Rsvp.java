@@ -13,6 +13,8 @@ public class Rsvp {
     private String name;
     private String email;
     private String message; // attendee message
+    
+    @Column(name = "user_id")
     private Long userId;
 
     @Column(name = "event_id")

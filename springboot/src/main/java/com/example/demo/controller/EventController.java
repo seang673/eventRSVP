@@ -1,11 +1,13 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.EventRequest;
+import com.example.demo.dto.EventResponse;
 import com.example.demo.model.Event;
 import com.example.demo.model.Rsvp;
 import com.example.demo.security.JwtUtil;
 import com.example.demo.service.EventService;
 import com.example.demo.service.RsvpService;
+import com.example.demo.dto.EventResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -15,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/events")
@@ -30,8 +33,8 @@ public class EventController {
     }
 
     @GetMapping
-    public List<Event> getAll() {
-        return eventService.getAll();
+    public List<EventResponse> getAll() {
+        return eventService.getAllEvents();
     }
 
     /*Retrieve event by its id */
