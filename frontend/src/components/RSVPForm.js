@@ -52,7 +52,7 @@ function RSVPForm() {
                     {error && <p className="error">{error}</p>}
                     <div className="form-group">
                         <label htmlFor="name">Name:</label>
-                        <input className="rsvp-input" type = "text" id="naame" value={name} onChange={e => setName(e.target.value)} placeholder="Enter Name" required/>
+                        <input className="rsvp-input" type = "text" id="name" value={name} onChange={e => setName(e.target.value)} placeholder="Enter Name" required/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="email">Email:</label>

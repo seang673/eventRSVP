@@ -1,51 +1,105 @@
-import axios from 'axios';
-
-const token = localStorage.getItem('token');
+import axios from "axios";
 
 const api = axios.create({
-    baseURL: 'http://localhost:8080/api',
-    headers: {
-        'Content-Type': 'application/json'
+  baseURL: "http://localhost:8080/api",
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+// REQUEST INTERCEPTOR
+api.interceptors.request.use(
+  (config) => {
+    // 1. Attach JWT
+    const token = localStorage.getItem("token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
-});
 
-// Request interceptor to attach token
-api.interceptors.request.use(config => {
-  const token = localStorage.getItem('token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
+    // 2. Strip suspicious extension headers
+    const forbiddenHeaders = [
+      "x-chrome-extension",
+      "x-firefox-extension",
+      "x-edge-extension",
+      "extension-id",
+      "chrome-extension-id",
+      "fetch-rewards-extension",
+      "sec-fetch-site",
+    ];
 
-// Response interceptor to handle token refresh
+    forbiddenHeaders.forEach((h) => {
+      if (config.headers[h]) delete config.headers[h];
+    });
+
+    // 3. Normalize URL (remove trailing slash)
+    if (config.url.endsWith("/")) {
+      config.url = config.url.slice(0, -1);
+    }
+
+    // 4. Force clean caching
+    config.headers["Cache-Control"] = "no-store";
+    config.headers["Pragma"] = "no-cache";
+
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+// RESPONSE INTERCEPTOR
 api.interceptors.response.use(
-  res => res,
-  async err => {
-    const originalRequest = err.config;
+  (response) => response,
 
+  async (error) => {
+    const original = error.config;
+
+    // -----------------------------
+    // 1. HANDLE TOKEN REFRESH
+    // -----------------------------
     if (
-      err.response?.status === 401 &&
-      !originalRequest._retry &&
-      localStorage.getItem('refresh')
+      error.response?.status === 401 &&
+      !original._retry &&
+      localStorage.getItem("refresh")
     ) {
-      originalRequest._retry = true;
+      original._retry = true;
+
       try {
-        const refreshToken = localStorage.getItem('refresh');
-        const res = await axios.post('/api/token/refresh/', { refresh: refreshToken });
-        localStorage.setItem('token', res.data.access);
-        originalRequest.headers.Authorization = `Bearer ${res.data.access}`;
-        return api(originalRequest); // retry original request
+        const refreshToken = localStorage.getItem("refresh");
+
+        // Use FULL URL or api instance
+        const res = await axios.post(
+          "http://localhost:8080/api/token/refresh",
+          { refresh: refreshToken }
+        );
+
+        localStorage.setItem("token", res.data.access);
+        original.headers.Authorization = `Bearer ${res.data.access}`;
+
+        return api(original);
       } catch (refreshErr) {
-        console.error('Token refresh failed:', refreshErr);
-        // Optionally redirect to login
+        console.error("Token refresh failed:", refreshErr);
       }
     }
 
-    return Promise.reject(err);
+    // -----------------------------
+    // 2. HANDLE EXTENSION INTERFERENCE
+    // -----------------------------
+    const extensionInterference =
+      error.message?.includes("message channel closed") ||
+      error.message?.includes("A listener indicated an asynchronous response") ||
+      error.response?.status === 401;
+
+    if (extensionInterference && !original._retry) {
+      original._retry = true;
+
+      original.headers["Cache-Control"] = "no-store";
+      original.headers["Pragma"] = "no-cache";
+
+      return api(original);
+    }
+
+    return Promise.reject(error);
   }
 );
 
-
-
 export default api;
+
