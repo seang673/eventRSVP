@@ -92,9 +92,9 @@ function EventList(){
                             <p>Location: {event.location}</p>
                             <p>{event.description}</p>
                             <p>
-                                {event.rsvp_count >= event.capacity
+                                {event.rsvpCount >= event.capacity
                                     ? "Event is full"
-                                    : `${event.capacity - event.rsvp_count} spots left`
+                                    : `${event.capacity - event.rsvpCount} spots left`
                                 }
                             </p>
                             {!isOrganizer && (

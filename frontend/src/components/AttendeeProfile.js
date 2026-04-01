@@ -57,8 +57,6 @@ function UserProfilePage() {
 
     if (loading) return <p>Loading the RSVPs...</p>
 
-    const filteredRsvps = rsvps.filter(rsvp => rsvp?.email?.trim()?.toLowerCase() === userEmail?.trim()?.toLowerCase());
-    console.log("Filtered Rsvps:", filteredRsvps);
     console.log("Email:", userEmail);
     const username = localStorage.getItem('username')
     return (
@@ -82,7 +80,7 @@ function UserProfilePage() {
                     </thead>
                     <tbody>
                         {/*populates table with rsvps*/}
-                        {filteredRsvps.map(rsvp => (
+                        {rsvps.map(rsvp => (
                             <tr key={rsvp.id}>
                                 <td>{rsvp.event_title || rsvp.event}</td>
                                 <td>{rsvp.name}</td>

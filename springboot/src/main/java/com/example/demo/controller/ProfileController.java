@@ -1,5 +1,22 @@
 package com.example.demo.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.dto.RsvpResponse;
+import com.example.demo.model.Event;
+import com.example.demo.model.Rsvp;
+import com.example.demo.repository.EventRepository;
+import com.example.demo.repository.RsvpRepository;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/api/profile")
@@ -56,6 +73,13 @@ public class ProfileController {
 
         List<Rsvp> rsvps = rsvpRepository.findByUserId(userId);
 
+        List<RsvpResponse> response = rsvps.stream()
+            .map(rsvp -> {
+                Event event = eventRepository.findById(rsvp.getEventId())
+                        .orElseThrow(() -> new RuntimeException("Event not found"));
+                return new RsvpResponse(rsvp, event);
+            })
+            .toList();
         return ResponseEntity.ok(rsvps);
     }
 }

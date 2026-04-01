@@ -6,6 +6,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -20,37 +22,44 @@ import java.util.List;
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 
+    
+
     @Override
     protected void doFilterInternal(
             HttpServletRequest request,
             HttpServletResponse response,
             FilterChain filterChain
-    ) throws ServletException, IOException {
+    ) throws ServletException, IOException { 
 
+        System.out.println("JWT FILTER EXECUTED");
         String servletPath = request.getServletPath();
         String authHeader = request.getHeader("Authorization");
 
         System.out.println("FILTER HIT: " + servletPath);
         System.out.println("AUTH HEADER = " + authHeader);
 
-        // ✅ 1. Allow OPTIONS preflight requests
+        // 1. Allow OPTIONS preflight
         if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
-            System.out.println("BYPASS OPTIONS");
             filterChain.doFilter(request, response);
             return;
         }
 
-        // ✅ 2. Allow public endpoints (login, register, public)
+        // 2. Allow public endpoints
         if (servletPath.startsWith("/api/auth/login") ||
             servletPath.startsWith("/api/auth/register") ||
             servletPath.startsWith("/api/public")) {
 
-            System.out.println("BYPASS PUBLIC ENDPOINT: " + servletPath);
             filterChain.doFilter(request, response);
             return;
         }
 
-        // ❗ All other endpoints require a Bearer token
+        // 3. If authentication already exists, skip JWT parsing
+        if (SecurityContextHolder.getContext().getAuthentication() != null) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        // 4. Require Bearer token
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write("Missing or invalid Authorization header");
@@ -58,6 +67,7 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         try {
+           
             String token = authHeader.substring(7).trim();
             System.out.println("TOKEN BEFORE PARSE = [" + token + "]");
 
@@ -73,18 +83,24 @@ public class JwtFilter extends OncePerRequestFilter {
             request.setAttribute("userId", userId);
             request.setAttribute("isOrganizer", isOrganizer);
 
+            List<GrantedAuthority> authorities =
+                    List.of(new SimpleGrantedAuthority("USER"));
+
             UsernamePasswordAuthenticationToken authentication =
                     new UsernamePasswordAuthenticationToken(
                             userId,
                             null,
-                            List.of() // no roles for now
+                            authorities
                     );
 
+            // 5. Install authentication
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             System.out.println("JWT FILTER PASSED — userId=" + userId + ", isOrganizer=" + isOrganizer);
 
+            // 6. Continue the chain
             filterChain.doFilter(request, response);
+            return;
 
         } catch (ExpiredJwtException e) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -96,3 +112,4 @@ public class JwtFilter extends OncePerRequestFilter {
         }
     }
 }
+
