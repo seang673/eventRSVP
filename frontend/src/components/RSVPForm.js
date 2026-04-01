@@ -14,12 +14,30 @@ function RSVPForm() {
 
     const navigate = useNavigate();
 
+    if (!selectedEvent) {
+        return (
+        <div className="form-Container">
+            <p>Loading event details...</p>
+        </div>
+        );
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (selectedEvent.rsvp_count >= selectedEvent.capacity){
-            setError("This event is full. You cannot RSVP")
+
+        if (
+            !selectedEvent ||
+            selectedEvent.rsvp_count == null ||
+            selectedEvent.capacity == null
+        ) {
+            return <p>Loading event...</p>;
+        }
+
+        if (selectedEvent.rsvp_count >= selectedEvent.capacity) {
+            setError("This event is full. You cannot RSVP");
             return;
         }
+
         try{
             const token = localStorage.getItem('token');
             const res = await api.post('/rsvp', {
@@ -34,7 +52,6 @@ function RSVPForm() {
             if (res.status === 201){
                 alert('RSVP submitted successfully!'); // ✅ popup
                 navigate('/events') //Navigate to RSVP Dashboard
-
             }
         } catch(err){
             console.error(err);
@@ -44,7 +61,7 @@ function RSVPForm() {
 
     return (
         <div className="form-Container">
-            <button class="back-btn" onClick={() => navigate(-1)}><b>🔙Back</b></button>
+            <button type="button" className="back-btn" onClick={() => navigate(-1)}><b>🔙Back</b></button>
 
             <div className="formBody">
                 <h2>RSVP for {selectedEvent.title}</h2>
