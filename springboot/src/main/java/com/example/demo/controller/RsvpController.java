@@ -56,13 +56,17 @@ public class RsvpController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteRsvp( @PathVariable Long id, HttpServletRequest request)
     {
+        System.out.println("DELETE ENDPOINT HIT");
         Long userId = (Long) request.getAttribute("userId");
         Boolean isOrganizer = (Boolean) request.getAttribute("isOrganizer");
-
+    
         Rsvp rsvp = rsvpService.getById(id);
         if (rsvp == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("RSVP not found");
         }
+
+        System.out.println("Deleting RSVP " + id + " owned by userId=" + rsvp.getUserId());
+        System.out.println("Authenticated userId=" + userId);
 
         // Attendee deleting another attendee's own RSVP
         if (!isOrganizer && !rsvp.getUserId().equals(userId)) {
