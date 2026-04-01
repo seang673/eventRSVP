@@ -80,6 +80,6 @@ public class ProfileController {
                 return new RsvpResponse(rsvp, event);
             })
             .toList();
-        return ResponseEntity.ok(rsvps);
+        return ResponseEntity.ok(response);
     }
 }

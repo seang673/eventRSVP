@@ -71,6 +71,7 @@ function UserProfilePage() {
                     <thead>
                         <tr>
                             <th>Event</th>
+                            <th>Event Date</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Message</th>
@@ -82,7 +83,8 @@ function UserProfilePage() {
                         {/*populates table with rsvps*/}
                         {rsvps.map(rsvp => (
                             <tr key={rsvp.id}>
-                                <td>{rsvp.event_title || rsvp.event}</td>
+                                <td>{rsvp.eventName}</td>
+                                <td>{rsvp.eventDate?.slice(0, 10)}</td>
                                 <td>{rsvp.name}</td>
                                 <td>{rsvp.email}</td>
                                 <td>{rsvp.message}</td>
