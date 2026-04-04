@@ -85,8 +85,7 @@ api.interceptors.response.use(
     // -----------------------------
     const extensionInterference =
       error.message?.includes("message channel closed") ||
-      error.message?.includes("A listener indicated an asynchronous response") ||
-      error.response?.status === 401;
+      error.message?.includes("A listener indicated an asynchronous response")
 
     if (extensionInterference && !original._retry) {
       original._retry = true;

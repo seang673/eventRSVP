@@ -21,25 +21,30 @@ function RSVPForm() {
         </div>
         );
     }
+    console.log("Selected event:", selectedEvent);
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (
             !selectedEvent ||
-            selectedEvent.rsvp_count == null ||
+            selectedEvent.rsvpCount == null ||
             selectedEvent.capacity == null
         ) {
-            return <p>Loading event...</p>;
+            setError("Event data not loaded yet. Please wait.");
+            return;
         }
 
-        if (selectedEvent.rsvp_count >= selectedEvent.capacity) {
+
+        if (selectedEvent.rsvpCount >= selectedEvent.capacity) {
             setError("This event is full. You cannot RSVP");
             return;
         }
 
         try{
             const token = localStorage.getItem('token');
+            console.log("Submitting RSVP with data:", { name, email, message, eventId: selectedEvent.id });
             const res = await api.post('/rsvp', {
                 name,
                 email,
@@ -50,6 +55,7 @@ function RSVPForm() {
                 Authorization: `Bearer ${token}`},
             });
             if (res.status === 201){
+                console.log("RSVP submitted with:", res.data);
                 alert('RSVP submitted successfully!'); // ✅ popup
                 navigate('/events') //Navigate to RSVP Dashboard
             }
