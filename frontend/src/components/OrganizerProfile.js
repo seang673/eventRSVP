@@ -56,7 +56,7 @@ function OrganizerProfile() {
     const handleCancelEvents = async (eventId) => {
         try{
             const token = localStorage.getItem('token');
-            const res = await api.delete(`events/${eventId}/`, {
+            const res = await api.delete(`events/${eventId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -125,7 +125,7 @@ function OrganizerProfile() {
                                     }</td>
                                     <td data-label="Location">{event.location}</td>
                                     <td data-label="Capacity">{event.capacity}</td>
-                                    <td data-label="RSVP Count">{event.rsvp_count}</td>
+                                    <td data-label="RSVP Count">{event.rsvpCount}</td>
                                     <td><button className="delete-btn" onClick={() => handleCancelEvents(event.id)}>Cancel</button></td>
                                 </tr>
                                 ))}
@@ -152,7 +152,7 @@ function OrganizerProfile() {
                             {/*populates table with rsvps*/}
                             {Array.isArray(rsvps) && rsvps.map(rsvp => (
                                 <tr key={rsvp.id}>
-                                    <td data-label="Event-Title">{rsvp.event_title || rsvp.event}</td>
+                                    <td data-label="Event-Title">{rsvp.eventName}</td>
                                     <td data-label="RSVP-Name">{rsvp.name}</td>
                                     <td data-label="Email">{rsvp.email}</td>
                                     <td data-label="Message">{rsvp.message}</td>

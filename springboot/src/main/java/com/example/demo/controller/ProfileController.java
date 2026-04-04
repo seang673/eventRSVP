@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.EventResponse;
 import com.example.demo.dto.RsvpResponse;
 import com.example.demo.model.Event;
 import com.example.demo.model.Rsvp;
@@ -44,15 +45,24 @@ public class ProfileController {
         // 1. Fetch all events created by this organizer
         List<Event> events = eventRepository.findByOrganizerId(userId);
 
+        //Convret to EventResponse with RSVP count
+        List<EventResponse> eventResponses = events.stream()
+        .map(event -> {
+            int rsvpCount = rsvpRepository.countByEventId(event.getId());
+            return new EventResponse(event, rsvpCount);
+        })
+        .toList();
+
         // 2. Fetch all RSVPs for those events
         List<Long> eventIds = events.stream()
                 .map(Event::getId)
                 .toList();
 
-        List<Rsvp> rsvps = rsvpRepository.findByEventIdIn(eventIds);
+        List<RsvpResponse> rsvps = rsvpRepository.findRsvpsForOrganizer(userId);
+
 
         Map<String, Object> response = new HashMap<>();
-        response.put("events", events);
+        response.put("events", eventResponses);
         response.put("rsvps", rsvps);
 
         return ResponseEntity.ok(response);
