@@ -22,7 +22,6 @@ import java.util.List;
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 
-    
 
     @Override
     protected void doFilterInternal(

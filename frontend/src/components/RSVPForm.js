@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import api from '../services/api';
 import {useLocation, useNavigate} from 'react-router-dom';
 import '../styles/createForms.css';
@@ -14,6 +14,11 @@ function RSVPForm() {
 
     const navigate = useNavigate();
 
+    useEffect(() => {
+        console.log("RSVPForm mounted");
+        return () => console.log("RSVPForm unmounted");
+    }, []);
+
     if (!selectedEvent) {
         return (
         <div className="form-Container">
@@ -22,7 +27,6 @@ function RSVPForm() {
         );
     }
     console.log("Selected event:", selectedEvent);
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
