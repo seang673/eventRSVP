@@ -69,7 +69,7 @@ const RegisterForm = () => {
                     </div>
                     <div className="form-group">
                         <p>{message}</p>
-                        <p>Already have an account? <Link to="/login" style={{fontWeight: 'bold', color:'#93ced9ff'}}>Log In</Link></p>
+                        <p>Already have an account? <Link to="/login" style={{fontWeight: 'bold', color:'rgb(56, 161, 179)'}}>Log In</Link></p>
                     </div>
                 </form>
             </div>

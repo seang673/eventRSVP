@@ -1,5 +1,5 @@
 .welcome-screen{
-    background-color: rgb(63, 148, 177);
+    background-color: rgb(115,226,230);
     display: flex;
     justify-content:center;  /*Horzontally center*/
     align-items:center;  /*Vertically towards the top */
@@ -7,7 +7,7 @@
 }
 
 .auth-screen{
-    background-color: rgb(63, 148, 177);
+    background-color: rgb(115,226,230);
     display: flex;
     justify-content:center;  /*Horzontally center*/
     align-items:center;  /*Vertically towards the top */
@@ -28,7 +28,7 @@
   top:190px;
   gap:8px;
   box-shadow:8px;
-  background-color:rgb(13, 97, 174);
+  background-color:rgb(129, 200, 141);
 }
 .rsvp-input{
     border-radius:6px;

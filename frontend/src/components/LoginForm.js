@@ -52,7 +52,7 @@ function LoginForm() {
                         <button className="submit-btn" type="submit">Log In</button>
                     </div>
 
-                    <p>Don't have an account? <Link to="/register" style={{fontWeight: 'bold', color:'#93ced9ff'}}>Register Here</Link></p>
+                    <p>Don't have an account? <Link to="/register" style={{fontWeight: 'bold', color:'rgb(56, 161, 179)'}}>Register Here</Link></p>
                 </form>
            </div>
         </div>

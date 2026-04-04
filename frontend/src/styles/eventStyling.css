@@ -1,5 +1,5 @@
 .event-list{
-    background-color: rgb(59, 211, 125);
+    background-color: rgb(125, 180, 212);
     display: flex;
     flex-direction:column;
     justify-content:center;  /*Horzontally center*/
@@ -44,7 +44,7 @@
     gap:2px;
     margin: 0 auto; /*horizontal centering */
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    background-color:rgb(229, 89, 58);
+    background-color:rgb(211, 88, 57);
     border-radius:11px;
     color:white;
     width:50%;

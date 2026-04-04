@@ -30,7 +30,8 @@ const Dashboard = () => {
 
 
     return (
-        <div className="dashboard-body">
+        <div className="dashboard-container">
+            <div className="bg-grid"></div><div className="bg-blob blob-1"></div><div className="bg-blob blob-2"></div><div className="bg-blob blob-3"></div><div className="dashboard-body">
                 <div className="first-section">
                     <h1>Welcome, {userData.username}!</h1>
                     <h3>Email: {userData.email}</h3>
@@ -44,6 +45,7 @@ const Dashboard = () => {
                     <button className="dsh-btn-class" onClick={() => navigate(userData.isOrganizer ? '/orgProfile' : '/attendeeProfile')}>User Profile</button>
                     <button className="dsh-btn-class" onClick={() => handleLogout(navigate)}>Logout</button>
                 </div>
+            </div>
         </div>
     );
 };

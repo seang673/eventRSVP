@@ -3,7 +3,9 @@
     flex-direction:column;
     justify-content:center;
     align-items: center;
-    background-color:rgb(220, 96, 82);
+    background-color: transparent;
+    position: relative;
+    z-index: 1;
     height:100vh;
     gap:50px;
 }
@@ -38,4 +40,66 @@
 
 .dsh-btn-class:hover{
     background-color:rgb(53, 52, 52);
+}
+
+/* Background wrapper */
+.dashboard-wrapper {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background: radial-gradient(circle at top left, #4f46e5 0, #111827 45%, #020617 100%);
+}
+
+/* Grid overlay */
+.bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Animated blobs */
+.bg-blob {
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 999px;
+  filter: blur(40px);
+  opacity: 0.55;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 0;
+  animation: float 18s ease-in-out infinite alternate;
+}
+
+.blob-1 {
+  background: #22c55e;
+  top: -80px;
+  left: -60px;
+  animation-delay: -4s;
+}
+
+.blob-2 {
+  background: #0ea5e9;
+  bottom: -120px;
+  right: -40px;
+  animation-delay: -9s;
+}
+
+.blob-3 {
+  background: #e11d48;
+  top: 40%;
+  left: 60%;
+  animation-delay: -13s;
+}
+
+@keyframes float {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(40px, -30px, 0) scale(1.08); }
+  100% { transform: translate3d(-30px, 20px, 0) scale(0.96); }
 }
