@@ -47,7 +47,7 @@ const RegisterForm = () => {
                     <h2>Register</h2>
                     <div className="form-group">
                         <label htmlFor="email">Email:</label>
-                        <input type="email" name="email" value={formData.email} placeholder="Email" onChange={handleChange} required/>
+                        <input type="email" id="email"name="email" value={formData.email} placeholder="Email" onChange={handleChange} required/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="username">Username:</label>
@@ -55,7 +55,7 @@ const RegisterForm = () => {
                     </div>
                     <div className="form-group">
                         <label htmlFor="password">Password:</label>
-                        <input type="password" name="password" value={formData.password} placeholder="Password" onChange={handleChange} required/>
+                        <input type="password" id="password" name="password" value={formData.password} placeholder="Password" onChange={handleChange} required/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="isOrganizer">
@@ -67,10 +67,10 @@ const RegisterForm = () => {
                     <div className="submit-section">
                         <button className="submit-btn" type="submit">Register</button>
                     </div>
-
-
+                    <div className="form-group">
                         <p>{message}</p>
                         <p>Already have an account? <Link to="/login" style={{fontWeight: 'bold', color:'#93ced9ff'}}>Log In</Link></p>
+                    </div>
                 </form>
             </div>
         </div>

@@ -21,6 +21,7 @@
   padding:5vh 8vh;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   text-align:center;
   position:absolute;
   border-radius:12px;
@@ -40,7 +41,15 @@
     display: flex;
     align-items:center;
     gap:12px;
-    margin-bottom:16px;
+    margin-bottom:10px;
+}
+
+#email, #password, #username{
+    width:100%;
+    border-radius:5px;
+    border: 1px solid #131313;
+    padding: 2px;
+    box-shadow: 0 0 5px rgba(147, 206, 217, 0.5);
 }
 
 .submit-section{

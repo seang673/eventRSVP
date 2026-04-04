@@ -135,7 +135,7 @@ function OrganizerProfile() {
                 </div>
 
                 <div className="rsvp-table">
-                    <h3>RSVPS To Your Events</h3>
+                    <h3>The Reservations To Your Events</h3>
                     {/* RSVP Table */}
                     <table>
                         <thead>

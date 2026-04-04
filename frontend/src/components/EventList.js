@@ -90,11 +90,11 @@ function EventList(){
                             )}
                             </h2>
                             <p>Location: {event.location}</p>
-                            <p>{event.description}</p>
+                            <p><b>{event.description}</b></p>
                             <p>
                                 {event.rsvpCount >= event.capacity
                                     ? "Event is full"
-                                    : `${event.capacity - event.rsvpCount} spots left`
+                                    : `${event.capacity - event.rsvpCount} spots remaining`
                                 }
                             </p>
                             {!isOrganizer && (
@@ -109,6 +109,7 @@ function EventList(){
                 <div className="page-handling">
                     {Array.from({ length: totalPages }, (_, i) => (
                         <button
+                            id="page-btn"
                             key={i}
                             onClick={() => setCurrentPage(i+1)}
                             style={{ margin: '0 5px', padding: '5px 10px' }}
