@@ -1,10 +1,8 @@
 # Event RSVP Application
 ## Features
-### Authentication & Authorization
+### 👤 Authentication & Authorization
 - Secure login & registration using JWT access + refresh tokens
 - Role‑based access:
-  - Organizer – create/manage events, view RSVPs
-  - Attendee – browse events, submit RSVPs
 - Automatic token refresh via Axios interceptors
 ### 📅 Event Management
 - Organizers can:
@@ -53,7 +51,7 @@ DevOps
 
 ### Backend
 ```
-cd backend
+cd springboot
 mvn spring-boot:run
 ```
 
@@ -75,7 +73,8 @@ npm run start
 
 
 ### Events
-| Method | Endpoint | Description | 
+| Method | Endpoint | Description |
+|------|------|------|
 | GET  | /events | List all events | 
 | POST | /events | Create event (organizer only) | 
 | PUT | /events/{id} | Update event | 
@@ -84,6 +83,7 @@ npm run start
 
 ### RSVP
 | Method | Endpoint | Description | 
+|------|------|------|
 | POST | /rsvp | Submit RSVP | 
 | GET | /rsvp/user | RSVPs for attendee | 
 | GET | /rsvp/organizer | RSVPs for organizer's events | 
