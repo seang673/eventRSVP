@@ -58,7 +58,7 @@ function RSVPForm() {
             headers: {
                 Authorization: `Bearer ${token}`},
             });
-            if (res.status === 201){
+            if (res.status === 200 || res.status === 201){
                 console.log("RSVP submitted with:", res.data);
                 alert('RSVP submitted successfully!'); // ✅ popup
                 navigate('/events') //Navigate to RSVP Dashboard

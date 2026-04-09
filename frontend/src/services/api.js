@@ -76,6 +76,8 @@ api.interceptors.response.use(
         return api(original);
       } catch (refreshErr) {
         console.error("Token refresh failed:", refreshErr);
+        return Promise.reject(refreshErr);
+
       }
     }
 
@@ -86,7 +88,8 @@ api.interceptors.response.use(
       error.message?.includes("message channel closed") ||
       error.message?.includes("A listener indicated an asynchronous response");
 
-    if (extensionInterference && !original._retry) {
+    if (extensionInterference && !original._retry && original.method?.toLowerCase() === "get")
+    {
       original._retry = true;
 
       original.headers["Cache-Control"] = "no-store";
