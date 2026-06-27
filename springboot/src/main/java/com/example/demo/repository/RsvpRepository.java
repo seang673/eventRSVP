@@ -10,7 +10,7 @@ public interface RsvpRepository extends JpaRepository<Rsvp, Long> {
     List<Rsvp> findByEventId(Long eventId);
     void deleteById(Long id);
     int countByEventId(Long eventId);
-    List<Rsvp> findByEventIdIn(List<Long> eventIds); 
+    List<Rsvp> findByEventIdIn(List<Long> eventIds);
     void deleteByEventId(Long eventId);
 
     @Query("""

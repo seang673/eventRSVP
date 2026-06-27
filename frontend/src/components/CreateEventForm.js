@@ -80,7 +80,7 @@ const CreateEventForm = () => {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            alert("Message Created Successfully!")
+            alert("Event Created Successfully!")
             navigate('/dashboard') //Navigate to dashboard after 2 seconds
         } catch(err) {
             const errorMsg = err.response?.data?.detail || 'Failed to create event';

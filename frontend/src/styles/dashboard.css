@@ -1,53 +1,87 @@
-.dashboard-body{
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items: center;
-    background-color: transparent;
-    position: relative;
-    z-index: 1;
-    height:100vh;
-    gap:50px;
-}
-
-.second-section{
-    display: flex;
-    flex-direction:column;
-    justify-content:space-between;
-    align-items:center;
-    gap:15px;
-}
-
-.first-section{
-    display: flex;
-    flex-direction:column;
-    justify-content:space-between;
-    align-items:center;
-    text-align:center;
-
-}
-
-.dsh-btn-class{
-    background-color:rgb(104, 102, 102);
-    color: white;
-    padding: 10px 20px;
-    text-align:center;
-    border-radius:11px;
-    cursor:pointer;
-    margin-bottom:20px;
-    transition: all 0.1s ease-in-out;
-}
-
-.dsh-btn-class:hover{
-    background-color:rgb(53, 52, 52);
-}
-
-/* Background wrapper */
+/* Background wrapper — the animated backdrop lives behind everything */
+.dashboard-container,
 .dashboard-wrapper {
   position: relative;
   min-height: 100vh;
   overflow: hidden;
   background: radial-gradient(circle at top left, #4f46e5 0, #111827 45%, #020617 100%);
+}
+
+.dashboard-body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    gap: 48px;
+    padding: 40px 24px;
+    box-sizing: border-box;
+    color: #f8fafc;
+    text-align: center;
+}
+
+.first-section h1 {
+    font-size: 2.2rem;
+    margin-bottom: 12px;
+}
+
+.first-section h3 {
+    font-weight: 500;
+    color: #cbd5e1;
+    margin: 4px 0;
+}
+
+.first-section h3 b {
+    color: #ffffff;
+}
+
+.second-section{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    max-width: 280px;
+}
+
+.first-section{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+
+.dsh-btn-class{
+    background-color: rgba(255, 255, 255, 0.95);
+    color: var(--color-primary-dark);
+    padding: 13px 20px;
+    width: 100%;
+    text-align: center;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: 1rem;
+    box-shadow: var(--shadow-md);
+    transition: all 0.15s ease-in-out;
+}
+
+.dsh-btn-class:hover{
+    background-color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* First (primary) action stands out */
+.second-section .dsh-btn-class:first-child {
+    background-color: var(--color-primary);
+    color: #ffffff;
+}
+.second-section .dsh-btn-class:first-child:hover {
+    background-color: var(--color-primary-light);
 }
 
 /* Grid overlay */
